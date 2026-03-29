@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Factory Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #039be5; /* สีน้ำเงินสไตล์ Firebase */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hello World!</h1>
+        <p>Smart Factory System is connecting...</p>
+        <div id="status">Firebase status: <span style="color: gray;">Checking...</span></div>
+    </div>
+
+    <script type="module">
+        // Import functions จาก SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+
+        // Firebase configuration ของคุณ
+        const firebaseConfig = {
+            apiKey: "AIzaSyARCq3UDDHka2_ac-lyEF2Hu9djk67DDIM",
+            authDomain: "smart-factory-system-project.firebaseapp.com",
+            projectId: "smart-factory-system-project",
+            storageBucket: "smart-factory-system-project.firebasestorage.app",
+            messagingSenderId: "1045060479105",
+            appId: "1:1045060479105:web:5811b3ea078ebdea8d8580",
+            measurementId: "G-FD7R57JW7R"
+        };
+
+        // Initialize Firebase
+        try {
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            
+            // อัปเดตสถานะบนหน้าจอเมื่อเชื่อมต่อสำเร็จ
+            document.getElementById('status').innerHTML = 'Firebase status: <span style="color: green;">Connected!</span>';
+            console.log("Firebase initialized successfully!");
+        } catch (error) {
+            document.getElementById('status').innerHTML = 'Firebase status: <span style="color: red;">Error!</span>';
+            console.error("Firebase initialization failed:", error);
+        }
+    </script>
+</body>
+</html>
