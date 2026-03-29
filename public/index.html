@@ -173,6 +173,24 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .btn-submit{background:var(--accent);border:1px solid var(--accent);color:#fff}
 .modal-err{font-size:26px;color:var(--red);font-family:var(--mono);margin-top:-8px;margin-bottom:8px;display:none}
 
+
+
+
+
+
+/* ── System state hero ── */
+.state-hero{padding:28px 28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
+.state-hero-eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:var(--mono);color:var(--text-sec);font-weight:500}
+.state-hero-name{font-size:52px;font-weight:600;font-family:var(--mono);line-height:1;letter-spacing:-1px}
+.state-hero-name.c-green{color:var(--green)}
+.state-hero-name.c-amber{color:var(--amber)}
+.state-hero-name.c-red{color:var(--red)}
+.state-hero-name.c-blue{color:var(--accent)}
+.state-hero-name.c-dim{color:var(--text-sec)}
+.state-hero-sub{font-size:13px;color:var(--text-dim);font-family:var(--mono)}
+.state-hero-right{display:none}
+.state-divider{height:1px;background:var(--border);margin:0 28px}
+
 /* responsive */
 @media(max-width:800px){.mid-row{grid-template-columns:1fr}.chart-card{min-height:200px}.navbar{padding:0 16px}.main{padding:16px 16px 40px}}
 @media(max-width:500px){.status-grid{grid-template-columns:1fr 1fr}.sensor-row{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}}
@@ -206,11 +224,19 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 <!-- ════ DASHBOARD ════ -->
 <div class="main">
 
+  <!-- System state hero -->
+  <div class="state-hero">
+    <div class="state-hero-eyebrow">System state</div>
+    <div class="state-hero-name c-dim" id="heroStateName">—</div>
+    <div class="state-hero-sub" id="heroStateDesc">Waiting for data...</div>
+  </div>
+  <div class="state-divider"></div>
+
   <!-- Machine status -->
   <div class="card">
     <div class="card-title">Machine status</div>
     <div class="status-grid">
-      <div class="stat-item"><div class="stat-label">state</div><div class="stat-val" id="machineState">—</div><div class="stat-sub" id="cycleStep">step: —</div></div>
+      <div class="stat-item"><div class="stat-label">state</div><div class="stat-val" id="machineState">—</div><div class="stat-sub" id="cycleStep">step: —</div><div class="stat-sub" id="machineDesc" style="margin-top:3px;font-size:11px"></div></div>
       <div class="stat-item"><div class="stat-label">conveyor</div><div class="stat-val" id="conveyorVal">—</div><div class="stat-sub" id="conveyorSub">stopped</div></div>
       <div class="stat-item"><div class="stat-label">last detected</div><div class="stat-val" id="lastColor">—</div><div class="stat-sub" id="confirmSub">0 / 4</div></div>
     </div>
@@ -479,7 +505,33 @@ window._wc=wc;
 onValue(ref(db,'realtime'),snap=>{
   const d=snap.val();if(!d)return;
   const state=STATES[d.machineState]||'—';
+  const sysState=d.systemState||state;  // OFFLINE ถ้า ESP32 หลุด
   const stEl=document.getElementById('machineState');stEl.textContent=state;stEl.className='stat-val '+(SC[state]||'');
+
+  
+  // ── system state hero ──────────────────────────────────────
+  const _SDESC={
+    OFFLINE:'ESP32 not connected',
+    IDLE:'Not homed — awaiting home command',
+    HOMING:'Homing arm, please wait...',
+    STANDBY:'Ready to start production',
+    RUNNING:'Production cycle active',
+    PAUSED:'Cycle paused — awaiting resume',
+    SETTING:'In setting mode',
+    ERROR:'Arm error — reset required'
+  };
+  const _SCOL={OFFLINE:'c-dim',IDLE:'c-dim',HOMING:'c-amber',STANDBY:'c-dim',RUNNING:'c-green',PAUSED:'c-amber',SETTING:'c-blue',ERROR:'c-red'};
+  const _SDOT={OFFLINE:'d',IDLE:'d',HOMING:'a',STANDBY:'d',RUNNING:'g',PAUSED:'a',SETTING:'a',ERROR:'r'};
+  const _hsn=document.getElementById('heroStateName');
+  const _hsd=document.getElementById('heroStateDesc');
+  if(_hsn){
+    _hsn.textContent=sysState;
+    _hsn.className='state-hero-name '+(_SCOL[sysState]||'c-dim');
+    _hsd.textContent=_SDESC[sysState]||'';
+
+  }
+  const STATE_DESC={IDLE:'Not homed yet',HOMING:'Homing arm...',STANDBY:'Ready to start',RUNNING:'Cycle running',PAUSED:'Waiting for resume',SETTING:'In setting mode',ERROR:'Arm error — reset required'};
+  const descEl=document.getElementById('machineDesc');if(descEl)descEl.textContent=STATE_DESC[state]||'';
   document.getElementById('cycleStep').textContent='step: '+(STEPS[d.cycleStep]||'—');
   const cvRun=d.conveyorRunning;
   const cvEl=document.getElementById('conveyorVal');cvEl.textContent=cvRun?(d.feedSpeedPPS||0)+' pps':'—';cvEl.className='stat-val '+(cvRun?'green':'');
