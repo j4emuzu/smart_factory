@@ -1,67 +1,633 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Factory Dashboard</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #039be5; /* สีน้ำเงินสไตล์ Firebase */
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Factory — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0a0d14;--surface:#111520;--surface2:#161c2d;--border:#1e2840;
+  --accent:#3b82f6;--accent-dim:#1d4ed8;
+  --red:#ef4444;--green:#22c55e;--blue:#3b82f6;--amber:#f59e0b;
+  --text:#e2e8f0;--text-sec:#64748b;--text-dim:#334155;
+  --ui:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;
+  --r:12px;--rs:8px;
+}
+[data-theme="light"]{
+  --bg:#f0f4f8;--surface:#fff;--surface2:#f8fafc;--border:#e2e8f0;
+  --text:#0f172a;--text-sec:#475569;--text-dim:#94a3b8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ══════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════ */
+.login-page{
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  min-height:100vh;padding:24px;
+}
+.login-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:36px 32px;
+  width:100%;max-width:400px;
+}
+.login-logo{
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;margin-bottom:28px;
+}
+.login-logo-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.login-logo-txt{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--accent);letter-spacing:2px;text-align:center;
+}
+.login-logo-sub{font-size:13px;color:var(--text-sec);font-weight:300}
+.login-title{font-size:20px;font-weight:500;margin-bottom:4px;text-align:center}
+.login-subtitle{font-size:13px;color:var(--text-sec);text-align:center;margin-bottom:24px;font-weight:300}
+.form-group{margin-bottom:16px}
+.form-label{
+  display:block;font-size:11px;font-weight:500;
+  color:var(--text-sec);font-family:var(--mono);
+  letter-spacing:.5px;margin-bottom:6px;
+}
+.form-input{
+  width:100%;background:var(--surface2);
+  border:1px solid var(--border);border-radius:var(--rs);
+  padding:11px 14px;font-size:14px;font-family:var(--ui);
+  color:var(--text);outline:none;transition:border .2s,box-shadow .2s;
+}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.form-input::placeholder{color:var(--text-dim)}
+.form-err{
+  font-size:12px;color:var(--red);font-family:var(--mono);
+  margin-top:6px;display:none;
+}
+.btn-primary{
+  width:100%;padding:12px;border-radius:var(--rs);
+  background:var(--accent);border:none;color:#fff;
+  font-size:14px;font-family:var(--ui);font-weight:500;
+  cursor:pointer;transition:background .2s;margin-top:4px;
+}
+.btn-primary:hover{background:var(--accent-dim)}
+.btn-primary:active{transform:scale(.99)}
+.login-footer{
+  display:flex;justify-content:center;margin-top:20px;
+  font-size:13px;color:var(--text-sec);gap:4px;
+}
+.login-link{
+  color:var(--accent);cursor:pointer;font-weight:500;
+  background:none;border:none;font-size:13px;font-family:var(--ui);
+  padding:0;text-decoration:none;
+}
+.login-link:hover{text-decoration:underline}
+.login-back{
+  display:flex;align-items:center;gap:6px;
+  color:var(--text-sec);cursor:pointer;font-size:13px;
+  background:none;border:none;font-family:var(--ui);
+  margin-bottom:20px;padding:0;
+}
+.login-back:hover{color:var(--text)}
+.login-success{
+  background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);
+  border-radius:var(--rs);padding:12px 16px;
+  font-size:13px;color:var(--green);
+  text-align:center;display:none;margin-top:12px;
+  font-family:var(--mono);
+}
+
+/* theme toggle on login page */
+.login-theme{
+  position:absolute;top:20px;right:20px;
+  width:36px;height:36px;border-radius:var(--rs);
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.icon-moon{display:block}.icon-sun{display:none}
+[data-theme="light"] .icon-moon{display:none}[data-theme="light"] .icon-sun{display:block}
+
+/* ══════════════════════════════════════
+   DASHBOARD PAGE
+══════════════════════════════════════ */
+.navbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 24px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  color:var(--accent);letter-spacing:2px;
+  display:flex;align-items:center;gap:8px;
+}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.online-badge{
+  font-family:var(--mono);font-size:10px;padding:3px 10px;
+  border-radius:20px;display:flex;align-items:center;gap:5px;
+}
+.online-badge.live{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.online-badge.offline{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.theme-btn{
+  width:36px;height:36px;border-radius:var(--rs);
+  border:1px solid var(--border);background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color .2s;
+}
+.theme-btn:hover{border-color:var(--accent)}
+.login-nav-btn{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  padding:6px 16px;border-radius:var(--rs);
+  border:1px solid var(--border);background:transparent;
+  color:var(--text-sec);cursor:pointer;transition:all .2s;letter-spacing:.5px;
+}
+.login-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.login-nav-btn.logged-in{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.08)}
+
+/* main content */
+.main{max-width:1200px;margin:0 auto;padding:24px 24px 80px;display:flex;flex-direction:column;gap:20px}
+.page-title{font-size:24px;font-weight:600;letter-spacing:-.3px}
+.page-sub{font-size:12px;color:var(--text-sec);margin-top:3px;font-family:var(--mono);font-weight:400}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;transition:background .3s,border .3s}
+.card-title{font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--text-sec);text-transform:uppercase;margin-bottom:14px;font-family:var(--mono)}
+
+/* status */
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px}
+.stat-label{font-size:10px;color:var(--text-sec);font-family:var(--mono);margin-bottom:4px;letter-spacing:.5px}
+.stat-val{font-size:18px;font-weight:500;font-family:var(--mono)}
+.stat-val.green{color:var(--green)}.stat-val.amber{color:var(--amber)}.stat-val.red{color:var(--red)}
+.stat-sub{font-size:10px;color:var(--text-dim);margin-top:3px;font-family:var(--mono)}
+.sensor-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sensor-pill{flex:1;min-width:100px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.s-led{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.s-led.on{background:var(--green);box-shadow:0 0 5px var(--green)}
+.s-led.off{background:var(--text-dim)}
+.s-led.err{background:var(--red);box-shadow:0 0 5px var(--red)}
+.s-label{font-size:12px;color:var(--text-sec);font-family:var(--ui)}
+.s-val{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text-dim)}
+
+/* count */
+.count-section{display:flex;flex-direction:column;gap:10px}
+.rgb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rgb-card{border-radius:var(--rs);padding:18px 12px;text-align:center;border:1px solid}
+.rgb-card.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.2)}
+.rgb-card.g{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.2)}
+.rgb-card.b{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.2)}
+.rgb-label{font-size:10px;font-weight:500;font-family:var(--mono);letter-spacing:1.5px;margin-bottom:8px}
+.rgb-label.r{color:rgba(239,68,68,.6)}.rgb-label.g{color:rgba(34,197,94,.6)}.rgb-label.b{color:rgba(59,130,246,.6)}
+.rgb-val{font-size:36px;font-weight:600;font-family:var(--mono);line-height:1}
+.rgb-val.r{color:var(--red)}.rgb-val.g{color:var(--green)}.rgb-val.b{color:var(--blue)}
+.tr-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tr-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.tr-label{font-size:12px;color:var(--text-sec);font-family:var(--mono)}
+.tr-val{font-size:22px;font-weight:500;font-family:var(--mono)}
+.tr-val.total{color:var(--text)}.tr-val.reject{color:var(--amber)}
+
+/* chart */
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-sec);font-family:var(--mono)}
+.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.chart-wrap{position:relative;height:200px}
+
+/* service */
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.svc-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.svc-icon{width:34px;height:34px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.svc-icon.green{background:rgba(34,197,94,.1)}.svc-icon.red{background:rgba(239,68,68,.1)}
+.svc-info{flex:1;min-width:0}
+.svc-name{font-size:11px;color:var(--text-sec);margin-bottom:2px;font-family:var(--mono)}
+.svc-val{font-size:13px;font-weight:500;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.svc-val.green{color:var(--green)}.svc-val.red{color:var(--red)}
+.svc-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.svc-badge.ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.svc-badge.err{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+
+/* actions */
+.action-row{display:flex;gap:10px;flex-wrap:wrap}
+.act-btn{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  padding:10px 20px;border-radius:var(--rs);
+  border:1px solid var(--border);background:var(--surface2);
+  color:var(--text-sec);cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;
+}
+.act-btn:hover{border-color:var(--accent);color:var(--accent)}
+.act-btn.export{border-color:rgba(59,130,246,.4);color:var(--accent);background:rgba(59,130,246,.06)}
+.act-btn.export:hover{background:rgba(59,130,246,.12)}
+.act-btn.pin{border-color:rgba(139,92,246,.4);color:#a78bfa;background:rgba(139,92,246,.06)}
+.act-btn.pin.hidden{display:none}
+
+/* back to top */
+.back-top{
+  position:fixed;bottom:28px;right:24px;
+  width:40px;height:40px;border-radius:var(--rs);
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .2s;opacity:0;pointer-events:none;z-index:50;color:var(--text-sec);
+}
+.back-top.show{opacity:1;pointer-events:auto}
+.back-top:hover{border-color:var(--accent);color:var(--accent)}
+
+/* reset PIN modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;width:100%;max-width:360px}
+.modal-title{font-size:17px;font-weight:600;margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--text-sec);margin-bottom:20px;font-family:var(--mono)}
+.modal label{display:block;font-size:10px;color:var(--text-sec);margin-bottom:4px;font-family:var(--mono);letter-spacing:.5px}
+.modal input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:13px;color:var(--text);font-family:var(--mono);outline:none;margin-bottom:14px;transition:border .2s}
+.modal input:focus{border-color:var(--accent)}
+.modal-btns{display:flex;gap:8px;margin-top:4px}
+.modal-btns button{flex:1;padding:10px;border-radius:var(--rs);font-family:var(--mono);font-size:12px;cursor:pointer;font-weight:500;transition:all .2s}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-sec)}
+.btn-submit{background:var(--accent);border:1px solid var(--accent);color:#fff}
+.modal-err{font-size:11px;color:var(--red);font-family:var(--mono);margin-top:-8px;margin-bottom:8px;display:none}
+
+/* responsive */
+@media(max-width:768px){.navbar{padding:0 16px}.main{padding:16px 16px 80px}.status-grid{grid-template-columns:1fr 1fr}.service-grid{grid-template-columns:1fr}.chart-wrap{height:160px}.action-row{flex-direction:column}.act-btn{justify-content:center}}
+@media(max-width:480px){.status-grid{grid-template-columns:1fr}.sensor-row{flex-direction:column}.rgb-val{font-size:28px}.page-title{font-size:20px}.login-card{padding:28px 20px}}
+@media(max-width:360px){.nav-logo span{display:none}.online-badge span{display:none}.tr-row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Hello World!</h1>
-        <p>Smart Factory System is connecting...</p>
-        <div id="status">Firebase status: <span style="color: gray;">Checking...</span></div>
+<!-- ═══════════════════════════════════════
+     LOGIN PAGE
+═══════════════════════════════════════ -->
+<div class="page active" id="loginPage">
+  <div style="position:relative">
+    <div class="login-theme theme-btn" id="loginThemeBtn" title="Toggle theme">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </div>
+  </div>
+  <div class="login-page">
+    <div class="login-card">
+
+      <!-- Sign in form -->
+      <div id="formSignIn">
+        <div class="login-logo">
+          <div class="login-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          </div>
+          <div class="login-logo-txt">SMART FACTORY</div>
+          <div class="login-logo-sub">Technician portal</div>
+        </div>
+        <div class="login-title">Sign in</div>
+        <div class="login-subtitle" style="margin-bottom:24px">Use your technician account</div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="siEmail" placeholder="technician@factory.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" id="siPassword" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <div class="form-err" id="siErr">Incorrect email or password</div>
+        <button class="btn-primary" id="siSubmit">Sign in</button>
+        <div class="login-footer">
+          <button class="login-link" id="goForgot">Forgot password?</button>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <button class="login-link" id="goDashboard" style="color:var(--text-sec);font-size:12px">← Back to dashboard</button>
+        </div>
+      </div>
+
+      <!-- Forgot password form -->
+      <div id="formForgot" style="display:none">
+        <button class="login-back" id="backToSignIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to sign in
+        </button>
+        <div class="login-logo">
+          <div class="login-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </div>
+        <div class="login-title" style="text-align:center">Reset password</div>
+        <div class="login-subtitle">Enter your email — we'll send a reset link</div>
+        <div class="form-group" style="margin-top:20px">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="fpEmail" placeholder="technician@factory.com"/>
+        </div>
+        <div class="form-err" id="fpErr">Email not found</div>
+        <button class="btn-primary" id="fpSubmit">Send reset link</button>
+        <div class="login-success" id="fpSuccess">
+          Reset link sent — check your inbox
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DASHBOARD PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="dashPage">
+  <nav class="navbar">
+    <div class="nav-logo">
+      <div class="logo-dot"></div>
+      <span>SMART FACTORY</span>
+    </div>
+    <div class="nav-right">
+      <div class="online-badge live" id="onlineBadge"><div class="pulse"></div><span id="onlineText">Live</span></div>
+      <div class="theme-btn" id="dashThemeBtn" title="Toggle theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </div>
+      <button class="login-nav-btn" id="authBtn">Login</button>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div><div class="page-title">Dashboard</div><div class="page-sub" id="dateTime">—</div></div>
+
+    <div class="card">
+      <div class="card-title">Machine status</div>
+      <div class="status-grid">
+        <div class="stat-item"><div class="stat-label">state</div><div class="stat-val green" id="machineState">STANDBY</div><div class="stat-sub" id="cycleStep">step: IDLE</div></div>
+        <div class="stat-item"><div class="stat-label">conveyor</div><div class="stat-val" id="conveyorVal">— pps</div><div class="stat-sub" id="conveyorSub">stopped</div></div>
+        <div class="stat-item"><div class="stat-label">last detected</div><div class="stat-val" id="lastColor">None</div><div class="stat-sub" id="confirmSub">0 / 4</div></div>
+      </div>
+      <div class="sensor-row">
+        <div class="sensor-pill"><div class="s-led off" id="irFeedLed"></div><div class="s-label">IR feed</div><div class="s-val" id="irFeedVal">CLEAR</div></div>
+        <div class="sensor-pill"><div class="s-led off" id="irPickLed"></div><div class="s-label">IR pick</div><div class="s-val" id="irPickVal">CLEAR</div></div>
+        <div class="sensor-pill"><div class="s-led off" id="colorLed"></div><div class="s-label">Color sensor</div><div class="s-val" id="colorVal">READY</div></div>
+      </div>
     </div>
 
-    <script type="module">
-        // Import functions จาก SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+    <div class="card">
+      <div class="card-title">Today's count</div>
+      <div class="count-section">
+        <div class="rgb-row">
+          <div class="rgb-card r"><div class="rgb-label r">RED</div><div class="rgb-val r" id="cntRed">0</div></div>
+          <div class="rgb-card g"><div class="rgb-label g">GREEN</div><div class="rgb-val g" id="cntGreen">0</div></div>
+          <div class="rgb-card b"><div class="rgb-label b">BLUE</div><div class="rgb-val b" id="cntBlue">0</div></div>
+        </div>
+        <div class="tr-row">
+          <div class="tr-card"><div class="tr-label">Total</div><div class="tr-val total" id="cntTotal">0</div></div>
+          <div class="tr-card"><div class="tr-label">Reject</div><div class="tr-val reject" id="cntReject">0</div></div>
+        </div>
+      </div>
+    </div>
 
-        // Firebase configuration ของคุณ
-        const firebaseConfig = {
-            apiKey: "AIzaSyARCq3UDDHka2_ac-lyEF2Hu9djk67DDIM",
-            authDomain: "smart-factory-system-project.firebaseapp.com",
-            projectId: "smart-factory-system-project",
-            storageBucket: "smart-factory-system-project.firebasestorage.app",
-            messagingSenderId: "1045060479105",
-            appId: "1:1045060479105:web:5811b3ea078ebdea8d8580",
-            measurementId: "G-FD7R57JW7R"
-        };
+    <div class="card">
+      <div class="chart-header">
+        <div class="card-title" style="margin-bottom:0">Weekly production</div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Red</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Green</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div>Blue</div>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="weeklyChart"></canvas></div>
+    </div>
 
-        // Initialize Firebase
-        try {
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            
-            // อัปเดตสถานะบนหน้าจอเมื่อเชื่อมต่อสำเร็จ
-            document.getElementById('status').innerHTML = 'Firebase status: <span style="color: green;">Connected!</span>';
-            console.log("Firebase initialized successfully!");
-        } catch (error) {
-            document.getElementById('status').innerHTML = 'Firebase status: <span style="color: red;">Error!</span>';
-            console.error("Firebase initialization failed:", error);
-        }
-    </script>
+    <div class="card">
+      <div class="card-title">System service</div>
+      <div class="service-grid">
+        <div class="svc-item">
+          <div class="svc-icon green" id="espIconWrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="var(--green)" stroke="none"/></svg>
+          </div>
+          <div class="svc-info"><div class="svc-name">ESP-NOW</div><div class="svc-val green" id="espNowVal">LINKED</div></div>
+          <div class="svc-badge ok" id="espNowBadge">OK</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon green" id="wifiIconWrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="var(--green)" stroke="none"/></svg>
+          </div>
+          <div class="svc-info"><div class="svc-name">WiFi</div><div class="svc-val green" id="wifiVal">—</div></div>
+          <div class="svc-badge ok" id="wifiBadge">OK</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="act-btn export" id="exportBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+      <button class="act-btn pin hidden" id="resetPinBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Reset PIN
+      </button>
+    </div>
+  </div>
+
+  <div class="back-top" id="backTop">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+  </div>
+</div>
+
+<!-- Reset PIN modal -->
+<div class="modal-overlay" id="pinModal">
+  <div class="modal">
+    <div class="modal-title">Reset device PIN</div>
+    <div class="modal-sub">Syncs to M5 on next unlock</div>
+    <label>New PIN (4 digits)</label>
+    <input type="password" id="newPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <label>Confirm PIN</label>
+    <input type="password" id="confirmPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <div class="modal-err" id="pinErr">PINs do not match</div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="pinCancel">Cancel</button>
+      <button class="btn-submit" id="pinSubmit">Update PIN</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyARCq3UDDHka2_ac-lyEF2Hu9djk67DDIM",
+  authDomain:"smart-factory-system-project.firebaseapp.com",
+  databaseURL:"https://smart-factory-system-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"smart-factory-system-project",
+  storageBucket:"smart-factory-system-project.firebasestorage.app",
+  messagingSenderId:"1045060479105",
+  appId:"1:1045060479105:web:5811b3ea078ebdea8d8580"
+});
+const db=getDatabase(app), auth=getAuth(app);
+
+const STATES=['IDLE','HOMING','STANDBY','RUNNING','PAUSED','SETTING','ERROR'];
+const STEPS=['IDLE','PRE-PICK','PICK','LIFT','PLACING','DROP','RELEASE','RETURN','TRASH'];
+const COLORS=['None','Red','Green','Blue','Unknown'];
+const SC={RUNNING:'green',PAUSED:'amber',ERROR:'red',HOMING:'amber',SETTING:'amber'};
+
+// ── Page nav ──
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── Theme ──
+let isDark=localStorage.getItem('sf-theme')!=='light';
+function applyTheme(dark){
+  isDark=dark;document.documentElement.dataset.theme=dark?'dark':'light';
+  localStorage.setItem('sf-theme',dark?'dark':'light');
+  if(wc){const tc=dark?'#64748b':'#94a3b8',gc=dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)';wc.options.scales.x.ticks.color=tc;wc.options.scales.y.ticks.color=tc;wc.options.scales.x.grid.color=gc;wc.options.scales.y.grid.color=gc;wc.update()}
+}
+applyTheme(isDark);
+[document.getElementById('loginThemeBtn'),document.getElementById('dashThemeBtn')].forEach(b=>b.addEventListener('click',()=>applyTheme(!isDark)));
+
+// ── Clock ──
+function updateClock(){const n=new Date();document.getElementById('dateTime').textContent=n.toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'short',day:'numeric'})+' · '+n.toTimeString().substr(0,8)}
+updateClock();setInterval(updateClock,1000);
+
+// ── Chart ──
+const wc=new Chart(document.getElementById('weeklyChart').getContext('2d'),{
+  type:'bar',
+  data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[
+    {label:'Red',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(239,68,68,.8)',borderRadius:4},
+    {label:'Green',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(34,197,94,.8)',borderRadius:4},
+    {label:'Blue',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(59,130,246,.8)',borderRadius:4}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#64748b',font:{family:"'IBM Plex Mono'",size:11}}},
+      y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#64748b',font:{family:"'IBM Plex Mono'",size:11},precision:0},beginAtZero:true}}}
+});
+
+// ── Firebase realtime ──
+let lastSeen=null;
+onValue(ref(db,'realtime'),snap=>{
+  const d=snap.val();if(!d)return;lastSeen=Date.now();
+  document.getElementById('onlineBadge').className='online-badge live';document.getElementById('onlineText').textContent='Live';
+  const state=STATES[d.machineState]||'—';const stEl=document.getElementById('machineState');stEl.textContent=state;stEl.className='stat-val '+(SC[state]||'');
+  document.getElementById('cycleStep').textContent='step: '+(STEPS[d.cycleStep]||'—');
+  const cvRun=d.conveyorRunning;const cvEl=document.getElementById('conveyorVal');
+  cvEl.textContent=cvRun?(d.feedSpeedPPS||0)+' pps':'— pps';cvEl.className='stat-val '+(cvRun?'green':'');
+  document.getElementById('conveyorSub').textContent=cvRun?'running':'stopped';
+  const colEl=document.getElementById('lastColor');
+  colEl.textContent=COLORS[d.detectedColor]||'None';
+  colEl.className='stat-val '+(d.detectedColor===1?'red':d.detectedColor===2?'green':d.detectedColor===3?'blue':'');
+  document.getElementById('confirmSub').textContent=(d.confirmCount||0)+' / 4';
+  const irF=d.irEntry,irP=d.irPick;
+  document.getElementById('irFeedLed').className='s-led '+(irF?'on':'off');document.getElementById('irFeedVal').textContent=irF?'TRIGGERED':'CLEAR';
+  document.getElementById('irPickLed').className='s-led '+(irP?'on':'off');document.getElementById('irPickVal').textContent=irP?'TRIGGERED':'CLEAR';
+  const tcsOk=d.tcsOk!==false,tcsTrig=d.tcsTriggered;
+  document.getElementById('colorLed').className='s-led '+(!tcsOk?'err':tcsTrig?'on':'off');
+  document.getElementById('colorVal').textContent=!tcsOk?'ERROR':tcsTrig?'DETECTING':'READY';
+  document.getElementById('cntRed').textContent=d.countRed||0;document.getElementById('cntGreen').textContent=d.countGreen||0;
+  document.getElementById('cntBlue').textContent=d.countBlue||0;document.getElementById('cntTotal').textContent=d.countTotal||0;
+  document.getElementById('cntReject').textContent=d.countReject||0;
+  const espOk=d.espNowLinked!==false;
+  document.getElementById('espNowVal').textContent=espOk?'LINKED':'LOST';document.getElementById('espNowVal').className='svc-val '+(espOk?'green':'red');
+  document.getElementById('espNowBadge').textContent=espOk?'OK':'ERR';document.getElementById('espNowBadge').className='svc-badge '+(espOk?'ok':'err');
+  document.getElementById('espIconWrap').className='svc-icon '+(espOk?'green':'red');
+  const wifiOk=d.wifiConnected!==false;
+  document.getElementById('wifiVal').textContent=wifiOk?(d.wifiSSID||'Connected'):'DISCONNECTED';document.getElementById('wifiVal').className='svc-val '+(wifiOk?'green':'red');
+  document.getElementById('wifiBadge').textContent=wifiOk?'OK':'ERR';document.getElementById('wifiBadge').className='svc-badge '+(wifiOk?'ok':'err');
+  document.getElementById('wifiIconWrap').className='svc-icon '+(wifiOk?'green':'red');
+});
+
+onValue(ref(db,'daily'),snap=>{
+  const data=snap.val();if(!data)return;
+  const today=new Date();const r=[],g=[],b=[];
+  for(let i=6;i>=0;i--){const d2=new Date(today);d2.setDate(today.getDate()-i);const key=d2.toISOString().substr(0,10);const day=data[key]||{};r.push(day.countRed||0);g.push(day.countGreen||0);b.push(day.countBlue||0)}
+  wc.data.datasets[0].data=r;wc.data.datasets[1].data=g;wc.data.datasets[2].data=b;wc.update();
+});
+
+setInterval(()=>{if(lastSeen&&Date.now()-lastSeen>5000){document.getElementById('onlineBadge').className='online-badge offline';document.getElementById('onlineText').textContent='Offline'}},2000);
+
+// ── Auth state ──
+let isLoggedIn=false;
+const authBtn=document.getElementById('authBtn'),pinBtn=document.getElementById('resetPinBtn');
+onAuthStateChanged(auth,user=>{
+  isLoggedIn=!!user;
+  authBtn.textContent=user?'Logout':'Login';
+  authBtn.className='login-nav-btn'+(user?' logged-in':'');
+  user?pinBtn.classList.remove('hidden'):pinBtn.classList.add('hidden');
+});
+authBtn.addEventListener('click',()=>{
+  if(isLoggedIn) signOut(auth);
+  else showPage('loginPage');
+});
+
+// ── Login form ──
+document.getElementById('goDashboard').addEventListener('click',()=>showPage('dashPage'));
+document.getElementById('goForgot').addEventListener('click',()=>{
+  document.getElementById('formSignIn').style.display='none';
+  document.getElementById('formForgot').style.display='block';
+});
+document.getElementById('backToSignIn').addEventListener('click',()=>{
+  document.getElementById('formForgot').style.display='none';
+  document.getElementById('formSignIn').style.display='block';
+  document.getElementById('fpSuccess').style.display='none';
+});
+
+document.getElementById('siSubmit').addEventListener('click',async()=>{
+  const em=document.getElementById('siEmail').value;
+  const pw=document.getElementById('siPassword').value;
+  const err=document.getElementById('siErr');err.style.display='none';
+  try{
+    await signInWithEmailAndPassword(auth,em,pw);
+    showPage('dashPage');
+    document.getElementById('siPassword').value='';
+  }catch(e){err.style.display='block'}
+});
+document.getElementById('siPassword').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('siSubmit').click()});
+
+// ── Forgot password ──
+document.getElementById('fpSubmit').addEventListener('click',async()=>{
+  const em=document.getElementById('fpEmail').value;
+  const err=document.getElementById('fpErr');const suc=document.getElementById('fpSuccess');
+  err.style.display='none';suc.style.display='none';
+  try{
+    await sendPasswordResetEmail(auth,em);
+    suc.style.display='block';
+  }catch(e){err.style.display='block'}
+});
+
+// ── Reset PIN ──
+pinBtn.addEventListener('click',()=>document.getElementById('pinModal').classList.add('show'));
+document.getElementById('pinCancel').addEventListener('click',()=>document.getElementById('pinModal').classList.remove('show'));
+document.getElementById('pinModal').addEventListener('click',e=>{if(e.target===document.getElementById('pinModal'))document.getElementById('pinModal').classList.remove('show')});
+document.getElementById('pinSubmit').addEventListener('click',async()=>{
+  const np=document.getElementById('newPin').value,cp=document.getElementById('confirmPin').value;
+  const err=document.getElementById('pinErr');err.style.display='none';
+  if(np.length!==4||!/^\d{4}$/.test(np)){err.textContent='PIN must be 4 digits';err.style.display='block';return}
+  if(np!==cp){err.textContent='PINs do not match';err.style.display='block';return}
+  await set(ref(db,'config/pin'),np);
+  document.getElementById('pinModal').classList.remove('show');
+  document.getElementById('newPin').value='';document.getElementById('confirmPin').value='';
+  alert('PIN updated — syncs on next M5 unlock');
+});
+
+// ── Export CSV ──
+document.getElementById('exportBtn').addEventListener('click',async()=>{
+  const snap=await get(ref(db,'sessions'));const data=snap.val();if(!data){alert('No session data found');return}
+  let csv='date,start_time,end_time,count_red,count_green,count_blue,count_total,count_reject\n';
+  Object.entries(data).sort().forEach(([k,s])=>{csv+=[k,s.startTime||'',s.endTime||'',s.countRed||0,s.countGreen||0,s.countBlue||0,s.countTotal||0,s.countReject||0].join(',')+'\n'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='smart-factory-sessions.csv';a.click();
+});
+
+// ── Back to top ──
+const backTop=document.getElementById('backTop');
+window.addEventListener('scroll',()=>backTop.classList.toggle('show',window.scrollY>300));
+backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
 </body>
 </html>
