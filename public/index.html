@@ -306,7 +306,10 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
         <div style="display:flex;align-items:center;gap:10px">
           <span class="thresh-saved-msg" id="savedMsg">Saved!</span>
           <button class="thresh-save" id="threshSaveBtn">Save to device</button>
-
+          <button class="nav-btn" id="resetPinBtn" style="border-color:rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.06)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Reset PIN
+          </button>
         </div>
       </div>
       <!-- Live raw values -->
@@ -382,6 +385,18 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
   </div>
 </div>
 
+<!-- ════ PIN MODAL ════ -->
+<div class="modal-overlay" id="pinModal">
+  <div class="modal">
+    <div class="modal-title">Reset device PIN</div>
+    <div class="modal-sub">Syncs to M5 on next unlock</div>
+    <label>New PIN (4 digits)</label><input class="modal-input" type="password" id="newPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <label>Confirm PIN</label><input class="modal-input" type="password" id="confirmPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <div class="modal-err" id="pinErr">PINs do not match</div>
+    <div class="modal-btns"><button class="btn-cancel" id="pinCancel">Cancel</button><button class="btn-submit" id="pinSubmit">Update PIN</button></div>
+  </div>
+</div>
+
 <!-- Floating theme btn -->
 <div id="themeBtn" title="Toggle theme" style="position:fixed;bottom:36px;right:28px;z-index:150;width:50px;height:50px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:border-color .2s">
   <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
@@ -437,7 +452,11 @@ window.addEventListener('DOMContentLoaded',function(){
   overlay.addEventListener('click',function(e){if(e.target===overlay)closeLogin()});
   document.getElementById('goForgot').addEventListener('click',function(){formSI.style.display='none';formFP.style.display=''});
   document.getElementById('backToSignIn').addEventListener('click',function(){formFP.style.display='none';formSI.style.display='';document.getElementById('fpSuccess').style.display='none';document.getElementById('fpErr').style.display='none'});
-
+  // pin modal
+  document.getElementById('resetPinBtn').addEventListener('click',function(){document.getElementById('pinModal').classList.add('show')});
+  document.getElementById('pinCancel').addEventListener('click',function(){document.getElementById('pinModal').classList.remove('show')});
+  document.getElementById('pinModal').addEventListener('click',function(e){if(e.target===document.getElementById('pinModal'))document.getElementById('pinModal').classList.remove('show')});
+  document.getElementById('pinSubmit').addEventListener('click',function(){if(window._updatePIN)window._updatePIN()});
   // export
   document.getElementById('exportBtn').addEventListener('click',function(){if(window._exportCSV)window._exportCSV();else alert('Firebase not connected')});
   // thresh save
@@ -485,8 +504,14 @@ window._wc=wc;
 // realtime
 onValue(ref(db,'realtime'),snap=>{
   const d=snap.val();if(!d)return;
-  const state=STATES[d.machineState]||'—';
-  const sysState=d.systemState||state;  // OFFLINE ถ้า ESP32 หลุด
+
+  // ── ตรวจอายุข้อมูล — ถ้า M5 ไม่ได้ push ใหม่เกิน 30 วิ = OFFLINE ──
+  const nowSec = Math.floor(Date.now() / 1000);
+  const ageSec = d.updatedAt ? (nowSec - d.updatedAt) : 999;
+  const m5Online = ageSec < 30;
+
+  const state    = m5Online ? (STATES[d.machineState]||'—') : 'IDLE';
+  const sysState = m5Online ? (d.systemState||state) : 'OFFLINE';
   const stEl=document.getElementById('machineState');stEl.textContent=state;stEl.className='stat-val '+(SC[state]||'');
 
   
@@ -564,7 +589,7 @@ onValue(ref(db,'config/threshold'),snap=>{
   });
 });
 
-// auth — login แล้วเห็น threshold ทันที ไม่มี role check
+// auth
 const authBtn=document.getElementById('authBtn');
 const threshSection=document.getElementById('threshSection');
 onAuthStateChanged(auth,user=>{
@@ -611,6 +636,18 @@ window._saveThresh=async()=>{
   const msg=document.getElementById('savedMsg');
   msg.style.display='inline';
   setTimeout(()=>{msg.style.display='none'},2000);
+};
+
+// update PIN
+window._updatePIN=async()=>{
+  const np=document.getElementById('newPin').value,cp=document.getElementById('confirmPin').value;
+  const err=document.getElementById('pinErr');err.style.display='none';
+  if(np.length!==4||!/^\d{4}$/.test(np)){err.textContent='PIN must be 4 digits';err.style.display='block';return}
+  if(np!==cp){err.textContent='PINs do not match';err.style.display='block';return}
+  await set(ref(db,'config/pin'),np);
+  document.getElementById('pinModal').classList.remove('show');
+  document.getElementById('newPin').value='';document.getElementById('confirmPin').value='';
+  alert('PIN updated — syncs on next M5 unlock');
 };
 
 // export CSV
