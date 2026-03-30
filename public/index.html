@@ -11,7 +11,7 @@
   --bg:#0a0d14;--surface:#111520;--surface2:#161c2d;--border:#1e2840;
   --accent:#3b82f6;--accent-dim:#1d4ed8;
   --red:#ef4444;--green:#22c55e;--blue:#3b82f6;--amber:#f59e0b;
-  --purple:#a78bfa;
+  --purple:#a78bfa;--coral:#f97316;
   --text:#e2e8f0;--text-sec:#64748b;--text-dim:#334155;
   --ui:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;
   --r:10px;--rs:6px;--nav:62px;
@@ -24,13 +24,8 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
 
-/* ══ NAVBAR ══ */
-.navbar{
-  background:var(--surface);border-bottom:1px solid var(--border);
-  padding:0 32px;height:var(--nav);
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;
-}
+/* NAVBAR */
+.navbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:var(--nav);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-logo{font-family:var(--mono);font-size:16px;font-weight:500;color:var(--accent);letter-spacing:2px;display:flex;align-items:center;gap:10px}
 .logo-icon{width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-right{display:flex;align-items:center;gap:8px}
@@ -40,16 +35,18 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
 .nav-btn.export{border-color:rgba(59,130,246,.4);color:var(--accent);background:rgba(59,130,246,.06)}
 .nav-btn.export:hover{background:rgba(59,130,246,.12)}
-.nav-btn.logged-in{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.08)}
+.nav-badge{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:4px;letter-spacing:.5px}
+.nav-badge.admin{background:rgba(249,115,22,.12);color:var(--coral);border:1px solid rgba(249,115,22,.3)}
+.nav-badge.tech{background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.3)}
 
-/* ══ MAIN ══ */
+/* MAIN */
 .main{max-width:1400px;margin:0 auto;padding:28px 56px 100px;display:flex;flex-direction:column;gap:20px}
 
-/* ══ CARDS ══ */
+/* CARDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px}
 .card-title{font-size:13px;font-weight:500;letter-spacing:1.5px;color:var(--text-sec);text-transform:uppercase;margin-bottom:18px;font-family:var(--mono)}
 
-/* ── Machine status ── */
+/* Machine status */
 .status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
 .stat-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:22px 18px}
 .stat-label{font-size:13px;color:var(--text-sec);font-family:var(--mono);margin-bottom:8px;letter-spacing:.5px}
@@ -59,13 +56,10 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .sensor-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .sensor-pill{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;display:flex;align-items:center;gap:10px}
 .s-led{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.s-led.on{background:var(--green);box-shadow:0 0 4px var(--green)}
-.s-led.off{background:var(--text-dim)}
-.s-led.err{background:var(--red);box-shadow:0 0 4px var(--red)}
-.s-label{font-size:19px;color:var(--text-sec)}
-.s-val{margin-left:auto;font-family:var(--mono);font-size:17px;color:var(--text-dim)}
+.s-led.on{background:var(--green);box-shadow:0 0 4px var(--green)}.s-led.off{background:var(--text-dim)}.s-led.err{background:var(--red);box-shadow:0 0 4px var(--red)}
+.s-label{font-size:19px;color:var(--text-sec)}.s-val{margin-left:auto;font-family:var(--mono);font-size:17px;color:var(--text-dim)}
 
-/* ── Middle row: count + chart ── */
+/* Mid row */
 .mid-row{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}
 .rgb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
 .rgb-card{border-radius:var(--rs);padding:24px 12px;text-align:center;border:1px solid}
@@ -88,7 +82,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
 .chart-wrap{flex:1;position:relative;min-height:270px}
 
-/* ── Bottom row: service ── */
+/* Service */
 .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .svc-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:18px 20px;display:flex;align-items:center;gap:14px}
 .svc-icon{width:40px;height:40px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -101,95 +95,110 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .svc-badge.ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
 .svc-badge.err{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
 
-/* ══ THRESHOLD SECTION (technician only) ══ */
-.thresh-section{display:none}
-.thresh-section.show{display:block}
+/* System state hero */
+.state-hero{padding:28px 28px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.state-hero-eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:var(--mono);color:var(--text-sec);font-weight:500}
+.state-hero-name{font-size:52px;font-weight:600;font-family:var(--mono);line-height:1;letter-spacing:-1px}
+.state-hero-name.c-green{color:var(--green)}.state-hero-name.c-amber{color:var(--amber)}.state-hero-name.c-red{color:var(--red)}.state-hero-name.c-blue{color:var(--accent)}.state-hero-name.c-dim{color:var(--text-sec)}
+.state-hero-sub{font-size:13px;color:var(--text-dim);font-family:var(--mono)}
+.state-divider{height:1px;background:var(--border);margin:0 28px}
+
+/* THRESHOLD */
+.thresh-section{display:none}.thresh-section.show{display:block}
 .thresh-card{background:var(--surface);border:1px solid rgba(167,139,250,.25);border-radius:var(--r);padding:14px 16px}
 .thresh-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .thresh-title-wrap{display:flex;align-items:center;gap:8px}
-.thresh-badge{font-family:var(--mono);font-size:17px;padding:2px 8px;border-radius:10px;background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.25)}
-.thresh-save{font-family:var(--mono);font-size:19px;font-weight:500;padding:7px 16px;border-radius:var(--rs);border:1px solid rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.06);cursor:pointer;transition:all .2s}
-.thresh-save:hover{background:rgba(167,139,250,.12)}
-.thresh-save:disabled{opacity:.4;cursor:default}
-/* live raw row */
+.thresh-badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.25);letter-spacing:.5px}
+.thresh-save{font-family:var(--mono);font-size:13px;font-weight:500;padding:7px 16px;border-radius:var(--rs);border:1px solid rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.06);cursor:pointer;transition:all .2s}
+.thresh-save:hover{background:rgba(167,139,250,.12)}.thresh-save:disabled{opacity:.4;cursor:default}
 .thresh-live{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:6px;margin-bottom:12px}
-.thresh-live-label{font-size:26px;color:var(--text-dim);font-family:var(--mono);flex-shrink:0}
+.thresh-live-label{font-size:13px;color:var(--text-dim);font-family:var(--mono);flex-shrink:0}
 .thresh-live-vals{margin-left:auto;display:flex;gap:14px}
-.tl-val{font-family:var(--mono);font-size:19px;font-weight:500}
+.tl-val{font-family:var(--mono);font-size:14px;font-weight:500}
 .tl-val.r{color:var(--red)}.tl-val.g{color:var(--green)}.tl-val.b{color:var(--blue)}
-/* adj rows */
 .thresh-rows{display:flex;flex-direction:column;gap:6px}
 .adj-row{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px}
-.adj-label{font-size:19px;font-weight:500;font-family:var(--mono);width:14px;flex-shrink:0}
+.adj-label{font-size:14px;font-weight:500;font-family:var(--mono);width:14px;flex-shrink:0}
 .adj-label.r{color:var(--red)}.adj-label.g{color:var(--green)}.adj-label.b{color:var(--blue)}
-.adj-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:3px;position:relative;cursor:pointer}
+.adj-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:3px}
 .adj-bar{height:100%;border-radius:3px;transition:width .2s}
 .adj-bar.r{background:var(--red)}.adj-bar.g{background:var(--green)}.adj-bar.b{background:var(--blue)}
-.adj-input{width:60px;background:transparent;border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:19px;font-family:var(--mono);color:var(--text);text-align:center;outline:none;flex-shrink:0}
+.adj-input{width:60px;background:transparent;border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:13px;font-family:var(--mono);color:var(--text);text-align:center;outline:none;flex-shrink:0}
 .adj-input:focus{border-color:var(--accent)}
-.adj-btn{width:28px;height:28px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text-sec);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;transition:all .15s;flex-shrink:0;font-family:var(--mono)}
+.adj-btn{width:28px;height:28px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text-sec);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0;font-family:var(--mono)}
 .adj-btn:hover{border-color:var(--accent);color:var(--accent)}
-.thresh-saved-msg{font-family:var(--mono);font-size:26px;color:var(--green);display:none;animation:fadeIn .3s}
+.thresh-saved-msg{font-family:var(--mono);font-size:13px;color:var(--green);display:none;animation:fadeIn .3s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* ══ OVERLAY ══ */
+/* ADMIN SECTION */
+.admin-section{display:none}.admin-section.show{display:block}
+.admin-card{background:var(--surface);border:1px solid rgba(249,115,22,.25);border-radius:var(--r);padding:20px 24px}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:10px}
+.admin-title-wrap{display:flex;align-items:center;gap:8px}
+.admin-badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(249,115,22,.1);color:var(--coral);border:1px solid rgba(249,115,22,.3);letter-spacing:.5px}
+.admin-desc{font-size:12px;color:var(--text-dim);font-family:var(--mono);margin-bottom:14px}
+.btn-add-tech{font-family:var(--mono);font-size:13px;font-weight:500;padding:7px 14px;border-radius:var(--rs);border:1px solid rgba(249,115,22,.4);color:var(--coral);background:rgba(249,115,22,.06);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.btn-add-tech:hover{background:rgba(249,115,22,.12)}
+.tech-table{width:100%;border-collapse:collapse}
+.tech-table th{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;font-weight:500}
+.tech-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:13px;vertical-align:middle}
+.tech-table tbody tr:last-child td{border-bottom:none}
+.tech-table tbody tr{transition:background .15s}.tech-table tbody tr:hover{background:var(--surface2)}
+.tech-id{color:var(--text-dim);font-size:11px}
+.tech-name{color:var(--text);font-weight:500}
+.tech-pin-dots{color:var(--text-dim);letter-spacing:3px}
+.tech-email{color:var(--text-sec);font-size:12px}
+.tech-actions{display:flex;gap:5px}
+.btn-icon{width:26px;height:26px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-dim);transition:all .15s;flex-shrink:0}
+.btn-icon.edit:hover{border-color:var(--accent);color:var(--accent);background:rgba(59,130,246,.08)}
+.btn-icon.del:hover{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08)}
+.tech-empty{text-align:center;padding:28px;color:var(--text-dim);font-family:var(--mono);font-size:13px}
+
+/* OVERLAY */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:20px}
 .overlay.show{display:flex}
 .login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 26px;width:100%;max-width:370px;position:relative}
 .login-logo{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
 .login-logo-icon{width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center}
-.login-brand{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--accent);letter-spacing:2px}
-.login-title{font-size:26px;font-weight:600;text-align:center;letter-spacing:-.3px}
-.login-sub{font-size:16px;color:var(--text-sec);text-align:center;margin-top:3px;font-weight:300;margin-bottom:18px}
+.login-brand{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--accent);letter-spacing:2px}
+.login-title{font-size:22px;font-weight:600;text-align:center;letter-spacing:-.3px}
+.login-sub{font-size:14px;color:var(--text-sec);text-align:center;margin-top:3px;font-weight:300;margin-bottom:18px}
 .form-group{margin-bottom:12px}
-.form-label{display:block;font-size:26px;font-weight:500;color:var(--text-sec);font-family:var(--mono);letter-spacing:.5px;margin-bottom:5px}
-.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:17px;font-family:var(--ui);color:var(--text);outline:none;transition:border .2s,box-shadow .2s}
+.form-label{display:block;font-size:12px;font-weight:500;color:var(--text-sec);font-family:var(--mono);letter-spacing:.5px;margin-bottom:5px}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:14px;font-family:var(--ui);color:var(--text);outline:none;transition:border .2s,box-shadow .2s}
 .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .form-input::placeholder{color:var(--text-dim)}
-.form-err{font-size:19px;color:var(--red);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none}
-.form-success{font-size:19px;color:var(--green);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none;text-align:center}
-.btn-primary{width:100%;padding:11px;border-radius:var(--rs);background:var(--accent);border:none;color:#fff;font-size:26px;font-family:var(--ui);font-weight:500;cursor:pointer;transition:background .2s}
+.form-err{font-size:12px;color:var(--red);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none}
+.form-success{font-size:12px;color:var(--green);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none;text-align:center}
+.btn-primary{width:100%;padding:11px;border-radius:var(--rs);background:var(--accent);border:none;color:#fff;font-size:14px;font-family:var(--ui);font-weight:500;cursor:pointer;transition:background .2s}
 .btn-primary:hover{background:var(--accent-dim)}
 .login-footer{display:flex;justify-content:flex-end;margin-top:12px}
-.login-link{color:var(--accent);cursor:pointer;font-weight:500;background:none;border:none;font-size:16px;font-family:var(--ui);padding:0}
+.login-link{color:var(--accent);cursor:pointer;font-weight:500;background:none;border:none;font-size:13px;font-family:var(--ui);padding:0}
 .login-link:hover{text-decoration:underline}
 .close-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sec)}
 .close-btn:hover{color:var(--text)}
-.back-link{display:flex;align-items:center;gap:6px;color:var(--text-sec);cursor:pointer;font-size:16px;background:none;border:none;font-family:var(--ui);padding:0;margin-bottom:12px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--text-sec);cursor:pointer;font-size:13px;background:none;border:none;font-family:var(--ui);padding:0;margin-bottom:12px}
 .back-link:hover{color:var(--text)}
 
-/* ══ PIN MODAL ══ */
+/* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;width:100%;max-width:330px}
-.modal-title{font-size:19px;font-weight:600;margin-bottom:3px}
-.modal-sub{font-size:19px;color:var(--text-sec);margin-bottom:16px;font-family:var(--mono)}
-.modal label{display:block;font-size:26px;color:var(--text-sec);margin-bottom:4px;font-family:var(--mono);letter-spacing:.5px}
-.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;font-size:17px;color:var(--text);font-family:var(--mono);outline:none;margin-bottom:12px;transition:border .2s}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;width:100%;max-width:340px}
+.modal.wide{max-width:400px}
+.modal-title{font-size:16px;font-weight:600;margin-bottom:3px}
+.modal-sub{font-size:13px;color:var(--text-sec);margin-bottom:16px;font-family:var(--mono)}
+.modal label{display:block;font-size:11px;color:var(--text-sec);margin-bottom:4px;font-family:var(--mono);letter-spacing:.5px;text-transform:uppercase}
+.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;font-size:14px;color:var(--text);font-family:var(--mono);outline:none;margin-bottom:12px;transition:border .2s}
 .modal-input:focus{border-color:var(--accent)}
-.modal-btns{display:flex;gap:8px;margin-top:2px}
-.modal-btns button{flex:1;padding:9px;border-radius:var(--rs);font-family:var(--mono);font-size:19px;cursor:pointer;font-weight:500}
+.modal-btns{display:flex;gap:8px;margin-top:4px}
+.modal-btns button{flex:1;padding:9px;border-radius:var(--rs);font-family:var(--mono);font-size:13px;cursor:pointer;font-weight:500}
 .btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-sec)}
+.btn-cancel:hover{border-color:var(--text-sec)}
 .btn-submit{background:var(--accent);border:1px solid var(--accent);color:#fff}
-.modal-err{font-size:26px;color:var(--red);font-family:var(--mono);margin-top:-8px;margin-bottom:8px;display:none}
-
-
-
-
-
-
-/* ── System state hero ── */
-.state-hero{padding:28px 28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
-.state-hero-eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:var(--mono);color:var(--text-sec);font-weight:500}
-.state-hero-name{font-size:52px;font-weight:600;font-family:var(--mono);line-height:1;letter-spacing:-1px}
-.state-hero-name.c-green{color:var(--green)}
-.state-hero-name.c-amber{color:var(--amber)}
-.state-hero-name.c-red{color:var(--red)}
-.state-hero-name.c-blue{color:var(--accent)}
-.state-hero-name.c-dim{color:var(--text-sec)}
-.state-hero-sub{font-size:13px;color:var(--text-dim);font-family:var(--mono)}
-.state-hero-right{display:none}
-.state-divider{height:1px;background:var(--border);margin:0 28px}
+.btn-submit:hover{background:var(--accent-dim)}
+.btn-submit.danger{background:var(--red);border-color:var(--red)}
+.btn-submit.danger:hover{background:#dc2626}
+.modal-err{font-size:12px;color:var(--red);font-family:var(--mono);margin-top:-8px;margin-bottom:10px;display:none}
 
 /* responsive */
 @media(max-width:800px){.mid-row{grid-template-columns:1fr}.chart-card{min-height:200px}.navbar{padding:0 16px}.main{padding:16px 16px 40px}}
@@ -199,7 +208,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 </head>
 <body>
 
-<!-- ════ NAVBAR ════ -->
+<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-logo">
     <div class="logo-icon">
@@ -217,14 +226,19 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Export CSV
     </button>
+    <span id="roleBadgeWrap" style="display:none"></span>
     <button id="authBtn" style="background:none;border:none;color:var(--text-sec);font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.5px;cursor:pointer;padding:6px 4px;transition:color .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-sec)'">Login</button>
+    <div id="themeBtn" style="width:34px;height:34px;border-radius:50%;background:transparent;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </div>
   </div>
 </nav>
 
-<!-- ════ DASHBOARD ════ -->
+<!-- DASHBOARD -->
 <div class="main">
 
-  <!-- System state hero -->
+  <!-- Hero -->
   <div class="state-hero">
     <div class="state-hero-eyebrow">System state</div>
     <div class="state-hero-name c-dim" id="heroStateName">—</div>
@@ -247,7 +261,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
-  <!-- Middle: count + chart -->
+  <!-- Count + chart -->
   <div class="mid-row">
     <div class="card">
       <div class="card-title">Today's count</div>
@@ -274,7 +288,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
-  <!-- System service -->
+  <!-- Service -->
   <div class="card">
     <div class="card-title">System service</div>
     <div class="service-grid">
@@ -295,13 +309,13 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
-  <!-- ══ TECHNICIAN: Threshold section ══ -->
+  <!-- THRESHOLD (Technician + Admin) -->
   <div class="thresh-section" id="threshSection">
     <div class="thresh-card">
       <div class="thresh-header">
         <div class="thresh-title-wrap">
           <div class="card-title" style="margin-bottom:0">Color threshold</div>
-          <div class="thresh-badge">Technician</div>
+          <span class="thresh-badge" id="threshRoleBadge">TECHNICIAN</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="thresh-saved-msg" id="savedMsg">Saved!</span>
@@ -312,34 +326,32 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
           </button>
         </div>
       </div>
-      <!-- Live raw values -->
       <div class="thresh-live">
-        <span class="thresh-live-label">Live</span>
+        <span class="thresh-live-label">Live raw</span>
         <div class="thresh-live-vals">
           <span class="tl-val r">R <span id="liveR">0.00</span></span>
           <span class="tl-val g">G <span id="liveG">0.00</span></span>
           <span class="tl-val b">B <span id="liveB">0.00</span></span>
         </div>
       </div>
-      <!-- Threshold adj rows -->
       <div class="thresh-rows">
         <div class="adj-row">
           <span class="adj-label r">R</span>
-          <div class="adj-bar-wrap" id="barR"><div class="adj-bar r" id="fillR" style="width:30%"></div></div>
+          <div class="adj-bar-wrap"><div class="adj-bar r" id="fillR" style="width:30%"></div></div>
           <button class="adj-btn" onclick="adjThresh('R',-0.01)">−</button>
           <input class="adj-input" type="number" id="inpR" min="0.01" max="0.99" step="0.01" value="0.30"/>
           <button class="adj-btn" onclick="adjThresh('R',+0.01)">+</button>
         </div>
         <div class="adj-row">
           <span class="adj-label g">G</span>
-          <div class="adj-bar-wrap" id="barG"><div class="adj-bar g" id="fillG" style="width:30%"></div></div>
+          <div class="adj-bar-wrap"><div class="adj-bar g" id="fillG" style="width:30%"></div></div>
           <button class="adj-btn" onclick="adjThresh('G',-0.01)">−</button>
           <input class="adj-input" type="number" id="inpG" min="0.01" max="0.99" step="0.01" value="0.30"/>
           <button class="adj-btn" onclick="adjThresh('G',+0.01)">+</button>
         </div>
         <div class="adj-row">
           <span class="adj-label b">B</span>
-          <div class="adj-bar-wrap" id="barB"><div class="adj-bar b" id="fillB" style="width:30%"></div></div>
+          <div class="adj-bar-wrap"><div class="adj-bar b" id="fillB" style="width:30%"></div></div>
           <button class="adj-btn" onclick="adjThresh('B',-0.01)">−</button>
           <input class="adj-input" type="number" id="inpB" min="0.01" max="0.99" step="0.01" value="0.30"/>
           <button class="adj-btn" onclick="adjThresh('B',+0.01)">+</button>
@@ -348,9 +360,34 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
+  <!-- ADMIN: Technician Manager -->
+  <div class="admin-section" id="adminSection">
+    <div class="admin-card">
+      <div class="admin-header">
+        <div class="admin-title-wrap">
+          <div class="card-title" style="margin-bottom:0">Technician manager</div>
+          <span class="admin-badge">ADMIN</span>
+        </div>
+        <button class="btn-add-tech" id="addTechBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add technician
+        </button>
+      </div>
+      <p class="admin-desc">PIN ที่บันทึกที่นี่ sync ไปยัง M5CoreS3 ทันทีที่มีการกด unlock บนหน้าจอ</p>
+      <table class="tech-table">
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>PIN</th><th>Dashboard email</th><th></th></tr>
+        </thead>
+        <tbody id="techTableBody">
+          <tr><td colspan="5" class="tech-empty">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
-<!-- ════ LOGIN OVERLAY ════ -->
+<!-- LOGIN OVERLAY -->
 <div class="overlay" id="loginOverlay">
   <div style="position:relative;width:100%;max-width:370px">
     <div class="close-btn" id="loginClose">
@@ -362,8 +399,8 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
         <div class="login-brand">SMART FACTORY</div>
       </div>
       <div class="login-title">Sign in</div>
-      <div class="login-sub">Technician account</div>
-      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="siEmail" placeholder="tech@factory.com" autocomplete="email"/></div>
+      <div class="login-sub">Admin or Technician account</div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="siEmail" placeholder="you@factory.com" autocomplete="email"/></div>
       <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="siPassword" placeholder="••••••••"/></div>
       <div class="form-err" id="siErr">Incorrect email or password</div>
       <button class="btn-primary" id="siSubmit">Sign in</button>
@@ -377,7 +414,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
       </div>
       <div class="login-title">Forgot password?</div>
       <div class="login-sub">We'll send a reset link</div>
-      <div class="form-group" style="margin-top:14px"><label class="form-label">Email</label><input class="form-input" type="email" id="fpEmail" placeholder="tech@factory.com"/></div>
+      <div class="form-group" style="margin-top:14px"><label class="form-label">Email</label><input class="form-input" type="email" id="fpEmail" placeholder="you@factory.com"/></div>
       <div class="form-err" id="fpErr">Email not found</div>
       <div class="form-success" id="fpSuccess">Reset link sent — check inbox</div>
       <button class="btn-primary" id="fpSubmit">Send reset link</button>
@@ -385,30 +422,61 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
   </div>
 </div>
 
-<!-- ════ PIN MODAL ════ -->
+<!-- PIN MODAL -->
 <div class="modal-overlay" id="pinModal">
   <div class="modal">
     <div class="modal-title">Reset device PIN</div>
     <div class="modal-sub">Syncs to M5 on next unlock</div>
-    <label>New PIN (4 digits)</label><input class="modal-input" type="password" id="newPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
-    <label>Confirm PIN</label><input class="modal-input" type="password" id="confirmPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <label>New PIN (4 digits)</label>
+    <input class="modal-input" type="password" id="newPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <label>Confirm PIN</label>
+    <input class="modal-input" type="password" id="confirmPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
     <div class="modal-err" id="pinErr">PINs do not match</div>
-    <div class="modal-btns"><button class="btn-cancel" id="pinCancel">Cancel</button><button class="btn-submit" id="pinSubmit">Update PIN</button></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="pinCancel">Cancel</button>
+      <button class="btn-submit" id="pinSubmit">Update PIN</button>
+    </div>
   </div>
 </div>
 
-<!-- Floating theme btn -->
-<div id="themeBtn" title="Toggle theme" style="position:fixed;bottom:36px;right:28px;z-index:150;width:50px;height:50px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:border-color .2s">
-  <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-  <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<!-- TECH ADD/EDIT MODAL -->
+<div class="modal-overlay" id="techModal">
+  <div class="modal wide">
+    <div class="modal-title" id="techModalTitle">Add technician</div>
+    <div class="modal-sub" id="techModalSub">New M5 unlock account</div>
+    <label>Name</label>
+    <input class="modal-input" type="text" id="techName" placeholder="Alice" maxlength="30"/>
+    <label>PIN (4 digits)</label>
+    <input class="modal-input" type="password" id="techPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
+    <label>Dashboard email <span style="color:var(--text-dim);font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+    <input class="modal-input" type="email" id="techEmail" placeholder="alice@factory.com"/>
+    <div class="modal-err" id="techErr"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="techCancel">Cancel</button>
+      <button class="btn-submit" id="techSubmit">Save</button>
+    </div>
+  </div>
 </div>
 
-<!-- ════ SCRIPTS ════ -->
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="delModal">
+  <div class="modal">
+    <div class="modal-title">Remove technician</div>
+    <div class="modal-sub" id="delModalSub">This will revoke M5 access immediately</div>
+    <div class="modal-err" id="delErr" style="margin-bottom:10px"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="delCancel">Cancel</button>
+      <button class="btn-submit danger" id="delSubmit">Remove</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   var isDark=localStorage.getItem('sf-theme')!=='light';
   function apply(dark){
-    isDark=dark;document.documentElement.dataset.theme=dark?'dark':'light';
+    isDark=dark;
+    document.documentElement.dataset.theme=dark?'dark':'light';
     localStorage.setItem('sf-theme',dark?'dark':'light');
     if(window._wc){
       var tc=dark?'#64748b':'#94a3b8',gc=dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)';
@@ -423,53 +491,59 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
   });
 })();
 
-// threshold adj
 function adjThresh(ch,delta){
   var inp=document.getElementById('inp'+ch);
   var v=Math.round((parseFloat(inp.value)+delta)*100)/100;
   v=Math.max(0.01,Math.min(0.99,v));
   inp.value=v.toFixed(2);
-  var fill=document.getElementById('fill'+ch);
-  fill.style.width=(v*100)+'%';
+  document.getElementById('fill'+ch).style.width=(v*100)+'%';
 }
-// sync bar on input change
+
 window.addEventListener('DOMContentLoaded',function(){
   ['R','G','B'].forEach(function(ch){
-    var inp=document.getElementById('inp'+ch);
-    inp.addEventListener('input',function(){
-      var v=parseFloat(inp.value)||0;
-      v=Math.max(0.01,Math.min(0.99,v));
+    document.getElementById('inp'+ch).addEventListener('input',function(){
+      var v=parseFloat(this.value)||0;v=Math.max(0.01,Math.min(0.99,v));
       document.getElementById('fill'+ch).style.width=(v*100)+'%';
     });
   });
+
   // login overlay
   var overlay=document.getElementById('loginOverlay');
   var formSI=document.getElementById('formSignIn'),formFP=document.getElementById('formForgot');
-  function openLogin(){overlay.classList.add('show');formSI.style.display='';formFP.style.display='none';document.getElementById('siErr').style.display='none'}
-  function closeLogin(){overlay.classList.remove('show')}
+  function openLogin(){overlay.classList.add('show');formSI.style.display='';formFP.style.display='none';document.getElementById('siErr').style.display='none';}
+  function closeLogin(){overlay.classList.remove('show');}
   window._openLogin=openLogin;window._closeLogin=closeLogin;
   document.getElementById('loginClose').addEventListener('click',closeLogin);
-  overlay.addEventListener('click',function(e){if(e.target===overlay)closeLogin()});
-  document.getElementById('goForgot').addEventListener('click',function(){formSI.style.display='none';formFP.style.display=''});
-  document.getElementById('backToSignIn').addEventListener('click',function(){formFP.style.display='none';formSI.style.display='';document.getElementById('fpSuccess').style.display='none';document.getElementById('fpErr').style.display='none'});
-  // pin modal
-  document.getElementById('resetPinBtn').addEventListener('click',function(){document.getElementById('pinModal').classList.add('show')});
-  document.getElementById('pinCancel').addEventListener('click',function(){document.getElementById('pinModal').classList.remove('show')});
-  document.getElementById('pinModal').addEventListener('click',function(e){if(e.target===document.getElementById('pinModal'))document.getElementById('pinModal').classList.remove('show')});
-  document.getElementById('pinSubmit').addEventListener('click',function(){if(window._updatePIN)window._updatePIN()});
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeLogin();});
+  document.getElementById('goForgot').addEventListener('click',function(){formSI.style.display='none';formFP.style.display='';});
+  document.getElementById('backToSignIn').addEventListener('click',function(){formFP.style.display='none';formSI.style.display='';document.getElementById('fpSuccess').style.display='none';document.getElementById('fpErr').style.display='none';});
+  document.getElementById('siPassword').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('siSubmit').click();});
+  document.getElementById('fpEmail').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('fpSubmit').click();});
+
   // export
-  document.getElementById('exportBtn').addEventListener('click',function(){if(window._exportCSV)window._exportCSV();else alert('Firebase not connected')});
+  document.getElementById('exportBtn').addEventListener('click',function(){if(window._exportCSV)window._exportCSV();else alert('Firebase not connected');});
   // thresh save
-  document.getElementById('threshSaveBtn').addEventListener('click',function(){if(window._saveThresh)window._saveThresh()});
-  // enter key
-  document.getElementById('siPassword').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('siSubmit').click()});
-  document.getElementById('fpEmail').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('fpSubmit').click()});
+  document.getElementById('threshSaveBtn').addEventListener('click',function(){if(window._saveThresh)window._saveThresh();});
+  // PIN modal
+  document.getElementById('resetPinBtn').addEventListener('click',function(){document.getElementById('pinModal').classList.add('show');});
+  document.getElementById('pinCancel').addEventListener('click',function(){document.getElementById('pinModal').classList.remove('show');});
+  document.getElementById('pinModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+  document.getElementById('pinSubmit').addEventListener('click',function(){if(window._updatePIN)window._updatePIN();});
+  // tech modal
+  document.getElementById('addTechBtn').addEventListener('click',function(){if(window._openTechModal)window._openTechModal();});
+  document.getElementById('techCancel').addEventListener('click',function(){document.getElementById('techModal').classList.remove('show');});
+  document.getElementById('techModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+  document.getElementById('techSubmit').addEventListener('click',function(){if(window._saveTech)window._saveTech();});
+  // delete modal
+  document.getElementById('delCancel').addEventListener('click',function(){document.getElementById('delModal').classList.remove('show');});
+  document.getElementById('delModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+  document.getElementById('delSubmit').addEventListener('click',function(){if(window._deleteTech)window._deleteTech();});
 });
 </script>
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import{getDatabase,ref,onValue,set,get}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import{getDatabase,ref,onValue,set,get,remove}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import{getAuth,signInWithEmailAndPassword,sendPasswordResetEmail,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 const app=initializeApp({
@@ -482,10 +556,14 @@ const app=initializeApp({
   appId:"1:1045060479105:web:5811b3ea078ebdea8d8580"
 });
 const db=getDatabase(app),auth=getAuth(app);
+
 const STATES=['IDLE','HOMING','STANDBY','RUNNING','PAUSED','SETTING','ERROR'];
 const STEPS=['IDLE','PRE-PICK','PICK','LIFT','PLACING','DROP','RELEASE','RETURN','TRASH'];
 const COLORS=['—','Red','Green','Blue','Unknown'];
 const SC={RUNNING:'green',PAUSED:'amber',ERROR:'red',HOMING:'amber',SETTING:'amber'};
+const SDESC={OFFLINE:'ESP32 not connected',IDLE:'Not homed — awaiting home command',HOMING:'Homing arm, please wait...',STANDBY:'Ready to start production',RUNNING:'Production cycle active',PAUSED:'Cycle paused — awaiting resume',SETTING:'In setting mode',ERROR:'Arm error — reset required'};
+const SCOL={OFFLINE:'c-dim',IDLE:'c-dim',HOMING:'c-amber',STANDBY:'c-dim',RUNNING:'c-green',PAUSED:'c-amber',SETTING:'c-blue',ERROR:'c-red'};
+const SDESC2={IDLE:'Not homed yet',HOMING:'Homing arm...',STANDBY:'Ready to start',RUNNING:'Cycle running',PAUSED:'Waiting for resume',SETTING:'In setting mode',ERROR:'Arm error — reset required'};
 
 // chart
 const wc=new Chart(document.getElementById('weeklyChart').getContext('2d'),{
@@ -501,37 +579,15 @@ const wc=new Chart(document.getElementById('weeklyChart').getContext('2d'),{
 });
 window._wc=wc;
 
-// realtime
+// realtime listener
 onValue(ref(db,'realtime'),snap=>{
   const d=snap.val();if(!d)return;
   const state=STATES[d.machineState]||'—';
-  const sysState=d.systemState||state;  // OFFLINE ถ้า ESP32 หลุด
+  const sysState=d.systemState||state;
   const stEl=document.getElementById('machineState');stEl.textContent=state;stEl.className='stat-val '+(SC[state]||'');
-
-  
-  // ── system state hero ──────────────────────────────────────
-  const _SDESC={
-    OFFLINE:'ESP32 not connected',
-    IDLE:'Not homed — awaiting home command',
-    HOMING:'Homing arm, please wait...',
-    STANDBY:'Ready to start production',
-    RUNNING:'Production cycle active',
-    PAUSED:'Cycle paused — awaiting resume',
-    SETTING:'In setting mode',
-    ERROR:'Arm error — reset required'
-  };
-  const _SCOL={OFFLINE:'c-dim',IDLE:'c-dim',HOMING:'c-amber',STANDBY:'c-dim',RUNNING:'c-green',PAUSED:'c-amber',SETTING:'c-blue',ERROR:'c-red'};
-  const _SDOT={OFFLINE:'d',IDLE:'d',HOMING:'a',STANDBY:'d',RUNNING:'g',PAUSED:'a',SETTING:'a',ERROR:'r'};
-  const _hsn=document.getElementById('heroStateName');
-  const _hsd=document.getElementById('heroStateDesc');
-  if(_hsn){
-    _hsn.textContent=sysState;
-    _hsn.className='state-hero-name '+(_SCOL[sysState]||'c-dim');
-    _hsd.textContent=_SDESC[sysState]||'';
-
-  }
-  const STATE_DESC={IDLE:'Not homed yet',HOMING:'Homing arm...',STANDBY:'Ready to start',RUNNING:'Cycle running',PAUSED:'Waiting for resume',SETTING:'In setting mode',ERROR:'Arm error — reset required'};
-  const descEl=document.getElementById('machineDesc');if(descEl)descEl.textContent=STATE_DESC[state]||'';
+  const hsn=document.getElementById('heroStateName'),hsd=document.getElementById('heroStateDesc');
+  if(hsn){hsn.textContent=sysState;hsn.className='state-hero-name '+(SCOL[sysState]||'c-dim');hsd.textContent=SDESC[sysState]||'';}
+  const descEl=document.getElementById('machineDesc');if(descEl)descEl.textContent=SDESC2[state]||'';
   document.getElementById('cycleStep').textContent='step: '+(STEPS[d.cycleStep]||'—');
   const cvRun=d.conveyorRunning;
   const cvEl=document.getElementById('conveyorVal');cvEl.textContent=cvRun?(d.feedSpeedPPS||0)+' pps':'—';cvEl.className='stat-val '+(cvRun?'green':'');
@@ -539,12 +595,11 @@ onValue(ref(db,'realtime'),snap=>{
   const colEl=document.getElementById('lastColor');colEl.textContent=COLORS[d.detectedColor]||'—';
   colEl.className='stat-val '+(d.detectedColor===1?'red':d.detectedColor===2?'green':d.detectedColor===3?'blue':'');
   document.getElementById('confirmSub').textContent=(d.confirmCount||0)+' / 4';
-  const irF=d.irEntry,irP=d.irPick;
-  document.getElementById('irFeedLed').className='s-led '+(irF?'on':'off');document.getElementById('irFeedVal').textContent=irF?'TRIGGERED':'CLEAR';
-  document.getElementById('irPickLed').className='s-led '+(irP?'on':'off');document.getElementById('irPickVal').textContent=irP?'TRIGGERED':'CLEAR';
-  const tcsOk=d.tcsOk!==false,tcsTrig=d.tcsTriggered;
-  document.getElementById('colorLed').className='s-led '+(!tcsOk?'err':tcsTrig?'on':'off');
-  document.getElementById('colorVal').textContent=!tcsOk?'ERROR':tcsTrig?'DETECTING':'READY';
+  document.getElementById('irFeedLed').className='s-led '+(d.irEntry?'on':'off');document.getElementById('irFeedVal').textContent=d.irEntry?'TRIGGERED':'CLEAR';
+  document.getElementById('irPickLed').className='s-led '+(d.irPick?'on':'off');document.getElementById('irPickVal').textContent=d.irPick?'TRIGGERED':'CLEAR';
+  const tcsOk=d.tcsOk!==false;
+  document.getElementById('colorLed').className='s-led '+(!tcsOk?'err':d.tcsTriggered?'on':'off');
+  document.getElementById('colorVal').textContent=!tcsOk?'ERROR':d.tcsTriggered?'DETECTING':'READY';
   document.getElementById('cntRed').textContent=d.countRed||0;document.getElementById('cntGreen').textContent=d.countGreen||0;
   document.getElementById('cntBlue').textContent=d.countBlue||0;document.getElementById('cntTotal').textContent=d.countTotal||0;
   document.getElementById('cntReject').textContent=d.countReject||0;
@@ -556,7 +611,6 @@ onValue(ref(db,'realtime'),snap=>{
   document.getElementById('wifiVal').textContent=wOk?(d.wifiSSID||'Connected'):'DISCONNECTED';document.getElementById('wifiVal').className='svc-val '+(wOk?'green':'red');
   document.getElementById('wifiBadge').textContent=wOk?'OK':'ERR';document.getElementById('wifiBadge').className='svc-badge '+(wOk?'ok':'err');
   document.getElementById('wifiIconWrap').className='svc-icon '+(wOk?'green':'red');
-  // live raw values (for threshold section)
   if(d.rawR!==undefined){
     document.getElementById('liveR').textContent=(+d.rawR).toFixed(2);
     document.getElementById('liveG').textContent=(+d.rawG).toFixed(2);
@@ -568,34 +622,65 @@ onValue(ref(db,'realtime'),snap=>{
 onValue(ref(db,'daily'),snap=>{
   const data=snap.val();if(!data)return;
   const today=new Date();const r=[],g=[],b=[];
-  for(let i=6;i>=0;i--){const d2=new Date(today);d2.setDate(today.getDate()-i);const key=d2.toISOString().substr(0,10);const day=data[key]||{};r.push(day.countRed||0);g.push(day.countGreen||0);b.push(day.countBlue||0)}
+  for(let i=6;i>=0;i--){const d2=new Date(today);d2.setDate(today.getDate()-i);const key=d2.toISOString().substr(0,10);const day=data[key]||{};r.push(day.countRed||0);g.push(day.countGreen||0);b.push(day.countBlue||0);}
   wc.data.datasets[0].data=r;wc.data.datasets[1].data=g;wc.data.datasets[2].data=b;wc.update();
 });
 
-// load threshold from Firebase
+// threshold sync from Firebase
 onValue(ref(db,'config/threshold'),snap=>{
   const d=snap.val();if(!d)return;
   ['R','G','B'].forEach(ch=>{
     const v=d['thresh'+ch];if(v===undefined)return;
-    const inp=document.getElementById('inp'+ch);
-    inp.value=(+v).toFixed(2);
+    document.getElementById('inp'+ch).value=(+v).toFixed(2);
     document.getElementById('fill'+ch).style.width=((+v)*100)+'%';
   });
 });
 
-// auth
-const authBtn=document.getElementById('authBtn');
-const threshSection=document.getElementById('threshSection');
-onAuthStateChanged(auth,user=>{
-  if(user){
-    authBtn.textContent='Logout';authBtn.style.color='var(--green)';
-    threshSection.classList.add('show');
+// ── ROLE SYSTEM ──────────────────────────────────────────────
+let _techCache={};
+
+async function checkRole(uid){
+  const snap=await get(ref(db,`config/admins/${uid}`));
+  return snap.exists()?'admin':'tech';
+}
+
+function applyRoleUI(role){
+  document.getElementById('threshSection').classList.add('show');
+  const badge=document.getElementById('roleBadgeWrap');
+  const threshBadge=document.getElementById('threshRoleBadge');
+  const authBtn=document.getElementById('authBtn');
+  if(role==='admin'){
+    document.getElementById('adminSection').classList.add('show');
+    threshBadge.textContent='ADMIN';
+    threshBadge.style.cssText='background:rgba(249,115,22,.1);color:var(--coral);border:1px solid rgba(249,115,22,.3)';
+    badge.innerHTML='<span class="nav-badge admin">ADMIN</span>';
+    startTechListener();
   }else{
-    authBtn.textContent='Login';authBtn.style.color='var(--text-sec)';
-    threshSection.classList.remove('show');
+    document.getElementById('adminSection').classList.remove('show');
+    threshBadge.textContent='TECHNICIAN';
+    threshBadge.style.cssText='';
+    badge.innerHTML='<span class="nav-badge tech">TECH</span>';
   }
+  badge.style.display='inline';
+  authBtn.textContent='Logout';
+  authBtn.style.color='var(--green)';
+}
+
+function clearRoleUI(){
+  document.getElementById('threshSection').classList.remove('show');
+  document.getElementById('adminSection').classList.remove('show');
+  document.getElementById('roleBadgeWrap').style.display='none';
+  const authBtn=document.getElementById('authBtn');
+  authBtn.textContent='Login';authBtn.style.color='var(--text-sec)';
+  _techCache={};
+}
+
+onAuthStateChanged(auth,async user=>{
+  if(user){const role=await checkRole(user.uid);applyRoleUI(role);}
+  else clearRoleUI();
 });
-authBtn.addEventListener('click',()=>{
+
+document.getElementById('authBtn').addEventListener('click',()=>{
   if(auth.currentUser)signOut(auth);
   else window._openLogin&&window._openLogin();
 });
@@ -605,7 +690,7 @@ document.getElementById('siSubmit').addEventListener('click',async()=>{
   const em=document.getElementById('siEmail').value,pw=document.getElementById('siPassword').value;
   const err=document.getElementById('siErr');err.style.display='none';
   try{await signInWithEmailAndPassword(auth,em,pw);window._closeLogin&&window._closeLogin();document.getElementById('siPassword').value='';}
-  catch(e){err.style.display='block'}
+  catch(e){err.style.display='block';}
 });
 
 // forgot password
@@ -614,43 +699,134 @@ document.getElementById('fpSubmit').addEventListener('click',async()=>{
   const err=document.getElementById('fpErr'),suc=document.getElementById('fpSuccess');
   err.style.display='none';suc.style.display='none';
   try{await sendPasswordResetEmail(auth,em);suc.style.display='block';}
-  catch(e){err.style.display='block'}
+  catch(e){err.style.display='block';}
 });
 
 // save threshold
 window._saveThresh=async()=>{
-  const btn=document.getElementById('threshSaveBtn');
-  btn.disabled=true;
+  const btn=document.getElementById('threshSaveBtn');btn.disabled=true;
   await set(ref(db,'config/threshold'),{
     threshR:parseFloat(document.getElementById('inpR').value),
     threshG:parseFloat(document.getElementById('inpG').value),
     threshB:parseFloat(document.getElementById('inpB').value)
   });
   btn.disabled=false;
-  const msg=document.getElementById('savedMsg');
-  msg.style.display='inline';
-  setTimeout(()=>{msg.style.display='none'},2000);
+  const msg=document.getElementById('savedMsg');msg.style.display='inline';
+  setTimeout(()=>{msg.style.display='none';},2000);
 };
 
-// update PIN
+// update legacy PIN
 window._updatePIN=async()=>{
   const np=document.getElementById('newPin').value,cp=document.getElementById('confirmPin').value;
   const err=document.getElementById('pinErr');err.style.display='none';
-  if(np.length!==4||!/^\d{4}$/.test(np)){err.textContent='PIN must be 4 digits';err.style.display='block';return}
-  if(np!==cp){err.textContent='PINs do not match';err.style.display='block';return}
+  if(!/^\d{4}$/.test(np)){err.textContent='PIN must be 4 digits';err.style.display='block';return;}
+  if(np!==cp){err.textContent='PINs do not match';err.style.display='block';return;}
   await set(ref(db,'config/pin'),np);
   document.getElementById('pinModal').classList.remove('show');
   document.getElementById('newPin').value='';document.getElementById('confirmPin').value='';
-  alert('PIN updated — syncs on next M5 unlock');
+  alert('Legacy PIN updated — syncs on next M5 unlock');
 };
 
 // export CSV
 window._exportCSV=async()=>{
   const snap=await get(ref(db,'sessions'));const data=snap.val();
-  if(!data){alert('No session data found');return}
+  if(!data){alert('No session data found');return;}
   let csv='date,start_time,end_time,count_red,count_green,count_blue,count_total,count_reject\n';
-  Object.entries(data).sort().forEach(([k,s])=>{csv+=[k,s.startTime||'',s.endTime||'',s.countRed||0,s.countGreen||0,s.countBlue||0,s.countTotal||0,s.countReject||0].join(',')+'\n'});
+  Object.entries(data).sort().forEach(([k,s])=>{csv+=[k,s.startTime||'',s.endTime||'',s.countRed||0,s.countGreen||0,s.countBlue||0,s.countTotal||0,s.countReject||0].join(',')+'\n';});
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='smart-factory-sessions.csv';a.click();
+};
+
+// ── TECHNICIAN MANAGER ───────────────────────────────────────
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function nextTechId(data){
+  const nums=Object.keys(data).map(k=>parseInt(k.replace('tech_',''))||0);
+  return 'tech_'+String((nums.length?Math.max(...nums):0)+1).padStart(3,'0');
+}
+
+function renderTechTable(data){
+  const tbody=document.getElementById('techTableBody');
+  const entries=Object.entries(data);
+  if(!entries.length){tbody.innerHTML='<tr><td colspan="5" class="tech-empty">No technicians yet — click Add technician</td></tr>';return;}
+  tbody.innerHTML=entries.map(([id,t])=>`
+    <tr>
+      <td><span class="tech-id">${esc(id)}</span></td>
+      <td><span class="tech-name">${esc(t.name||'—')}</span></td>
+      <td><span class="tech-pin-dots">••••</span></td>
+      <td><span class="tech-email">${esc(t.email||'—')}</span></td>
+      <td><div class="tech-actions">
+        <button class="btn-icon edit" title="Edit" onclick="window._editTech('${esc(id)}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="btn-icon del" title="Remove" onclick="window._confirmDelete('${esc(id)}','${esc(t.name||id)}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function startTechListener(){
+  onValue(ref(db,'config/technicians'),snap=>{
+    _techCache=snap.val()||{};
+    renderTechTable(_techCache);
+  });
+}
+
+window._openTechModal=function(id,name,pin,email){
+  const m=document.getElementById('techModal');
+  document.getElementById('techModalTitle').textContent=id?'Edit technician':'Add technician';
+  document.getElementById('techModalSub').textContent=id?'Update name or PIN':'New M5 unlock account';
+  document.getElementById('techName').value=name||'';
+  document.getElementById('techPin').value=pin||'';
+  document.getElementById('techEmail').value=email||'';
+  document.getElementById('techErr').style.display='none';
+  m.dataset.editId=id||'';
+  m.classList.add('show');
+  setTimeout(()=>document.getElementById('techName').focus(),50);
+};
+
+window._editTech=function(id){
+  const t=_techCache[id]||{};
+  window._openTechModal(id,t.name,t.pin,t.email);
+};
+
+window._saveTech=async function(){
+  const modal=document.getElementById('techModal');
+  const editId=modal.dataset.editId;
+  const name=document.getElementById('techName').value.trim();
+  const pin=document.getElementById('techPin').value.trim();
+  const email=document.getElementById('techEmail').value.trim();
+  const err=document.getElementById('techErr');
+  err.style.display='none';
+  if(!name){err.textContent='Name is required';err.style.display='block';return;}
+  if(!/^\d{4}$/.test(pin)){err.textContent='PIN must be exactly 4 digits';err.style.display='block';return;}
+  const dup=Object.entries(_techCache).find(([id,t])=>t.pin===pin&&id!==editId);
+  if(dup){err.textContent=`PIN already used by "${dup[1].name}"`;err.style.display='block';return;}
+  const id=editId||nextTechId(_techCache);
+  const data={name,pin};if(email)data.email=email;
+  try{
+    await set(ref(db,`config/technicians/${id}`),data);
+    modal.classList.remove('show');
+  }catch(e){err.textContent='Save failed: '+e.message;err.style.display='block';}
+};
+
+let _pendingDelId=null;
+window._confirmDelete=function(id,name){
+  _pendingDelId=id;
+  document.getElementById('delModalSub').textContent=`Remove "${name}"? M5 access revoked immediately.`;
+  document.getElementById('delErr').style.display='none';
+  document.getElementById('delModal').classList.add('show');
+};
+
+window._deleteTech=async function(){
+  if(!_pendingDelId)return;
+  try{
+    await remove(ref(db,`config/technicians/${_pendingDelId}`));
+    document.getElementById('delModal').classList.remove('show');
+    _pendingDelId=null;
+  }catch(e){
+    const el=document.getElementById('delErr');el.textContent='Failed: '+e.message;el.style.display='block';
+  }
 };
 </script>
 </body>
