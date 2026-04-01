@@ -40,7 +40,6 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
 .nav-btn.export{border-color:rgba(59,130,246,.4);color:var(--accent);background:rgba(59,130,246,.06)}
 .nav-btn.export:hover{background:rgba(59,130,246,.12)}
-.nav-btn.logged-in{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.08)}
 
 /* ══ MAIN ══ */
 .main{max-width:1400px;margin:0 auto;padding:28px 56px 100px;display:flex;flex-direction:column;gap:20px}
@@ -62,8 +61,8 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .s-led.on{background:var(--green);box-shadow:0 0 4px var(--green)}
 .s-led.off{background:var(--text-dim)}
 .s-led.err{background:var(--red);box-shadow:0 0 4px var(--red)}
-.s-label{font-size:19px;color:var(--text-sec)}
-.s-val{margin-left:auto;font-family:var(--mono);font-size:17px;color:var(--text-dim)}
+.s-label{font-size:13px;color:var(--text-sec)}
+.s-val{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--text-dim)}
 
 /* ── Middle row: count + chart ── */
 .mid-row{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}
@@ -76,7 +75,7 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .rgb-label.r{color:rgba(239,68,68,.6)}.rgb-label.g{color:rgba(34,197,94,.6)}.rgb-label.b{color:rgba(59,130,246,.6)}
 .rgb-val{font-size:44px;font-weight:600;font-family:var(--mono);line-height:1}
 .rgb-val.r{color:var(--red)}.rgb-val.g{color:var(--green)}.rgb-val.b{color:var(--blue)}
-.tr-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tr-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .tr-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
 .tr-label{font-size:13px;color:var(--text-sec);font-family:var(--mono)}
 .tr-val{font-size:18px;font-weight:500;font-family:var(--mono)}
@@ -88,95 +87,40 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
 .chart-wrap{flex:1;position:relative;min-height:270px}
 
-/* ── Bottom row: service ── */
+/* ── End Shift card ── */
+.shift-card{background:var(--surface);border:1px solid rgba(245,158,11,.2);border-radius:var(--r);padding:20px 24px}
+.shift-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.shift-info{display:flex;flex-direction:column;gap:4px}
+.shift-title{font-size:15px;font-weight:600;color:var(--text)}
+.shift-sub{font-size:13px;color:var(--text-sec);font-family:var(--mono)}
+.shift-started{font-size:12px;color:var(--text-dim);font-family:var(--mono);margin-top:2px}
+.shift-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.btn-end-shift{
+  font-family:var(--mono);font-size:13px;font-weight:600;
+  padding:10px 22px;border-radius:var(--rs);
+  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.4);
+  color:var(--amber);cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;letter-spacing:.5px
+}
+.btn-end-shift:hover{background:rgba(245,158,11,.18);border-color:var(--amber)}
+.btn-end-shift:disabled{opacity:.4;cursor:default}
+.btn-end-shift.loading{opacity:.6;cursor:default}
+.shift-saved-msg{font-family:var(--mono);font-size:12px;color:var(--green);display:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.shift-saved-msg.show{display:inline;animation:fadeIn .3s}
+
+/* ── System service ── */
 .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .svc-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:18px 20px;display:flex;align-items:center;gap:14px}
 .svc-icon{width:40px;height:40px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .svc-icon.green{background:rgba(34,197,94,.1)}.svc-icon.red{background:rgba(239,68,68,.1)}
 .svc-info{flex:1;min-width:0}
-.svc-name{font-size:17px;color:var(--text-sec);margin-bottom:2px;font-family:var(--mono)}
-.svc-val{font-size:16px;font-weight:500;font-family:var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.svc-name{font-size:13px;color:var(--text-sec);margin-bottom:2px;font-family:var(--mono)}
+.svc-val{font-size:14px;font-weight:500;font-family:var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .svc-val.green{color:var(--green)}.svc-val.red{color:var(--red)}
-.svc-badge{font-family:var(--mono);font-size:16px;padding:2px 7px;border-radius:10px;flex-shrink:0}
+.svc-badge{font-family:var(--mono);font-size:12px;padding:2px 7px;border-radius:10px;flex-shrink:0}
 .svc-badge.ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
 .svc-badge.err{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
-
-/* ══ THRESHOLD SECTION (technician only) ══ */
-.thresh-section{display:none}
-.thresh-section.show{display:block}
-.thresh-card{background:var(--surface);border:1px solid rgba(167,139,250,.25);border-radius:var(--r);padding:14px 16px}
-.thresh-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.thresh-title-wrap{display:flex;align-items:center;gap:8px}
-.thresh-badge{font-family:var(--mono);font-size:17px;padding:2px 8px;border-radius:10px;background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.25)}
-.thresh-save{font-family:var(--mono);font-size:19px;font-weight:500;padding:7px 16px;border-radius:var(--rs);border:1px solid rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.06);cursor:pointer;transition:all .2s}
-.thresh-save:hover{background:rgba(167,139,250,.12)}
-.thresh-save:disabled{opacity:.4;cursor:default}
-/* live raw row */
-.thresh-live{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:6px;margin-bottom:12px}
-.thresh-live-label{font-size:26px;color:var(--text-dim);font-family:var(--mono);flex-shrink:0}
-.thresh-live-vals{margin-left:auto;display:flex;gap:14px}
-.tl-val{font-family:var(--mono);font-size:19px;font-weight:500}
-.tl-val.r{color:var(--red)}.tl-val.g{color:var(--green)}.tl-val.b{color:var(--blue)}
-/* adj rows */
-.thresh-rows{display:flex;flex-direction:column;gap:6px}
-.adj-row{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px}
-.adj-label{font-size:19px;font-weight:500;font-family:var(--mono);width:14px;flex-shrink:0}
-.adj-label.r{color:var(--red)}.adj-label.g{color:var(--green)}.adj-label.b{color:var(--blue)}
-.adj-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:3px;position:relative;cursor:pointer}
-.adj-bar{height:100%;border-radius:3px;transition:width .2s}
-.adj-bar.r{background:var(--red)}.adj-bar.g{background:var(--green)}.adj-bar.b{background:var(--blue)}
-.adj-input{width:60px;background:transparent;border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:19px;font-family:var(--mono);color:var(--text);text-align:center;outline:none;flex-shrink:0}
-.adj-input:focus{border-color:var(--accent)}
-.adj-btn{width:28px;height:28px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text-sec);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;transition:all .15s;flex-shrink:0;font-family:var(--mono)}
-.adj-btn:hover{border-color:var(--accent);color:var(--accent)}
-.thresh-saved-msg{font-family:var(--mono);font-size:26px;color:var(--green);display:none;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-/* ══ OVERLAY ══ */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:20px}
-.overlay.show{display:flex}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 26px;width:100%;max-width:370px;position:relative}
-.login-logo{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
-.login-logo-icon{width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center}
-.login-brand{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--accent);letter-spacing:2px}
-.login-title{font-size:26px;font-weight:600;text-align:center;letter-spacing:-.3px}
-.login-sub{font-size:16px;color:var(--text-sec);text-align:center;margin-top:3px;font-weight:300;margin-bottom:18px}
-.form-group{margin-bottom:12px}
-.form-label{display:block;font-size:26px;font-weight:500;color:var(--text-sec);font-family:var(--mono);letter-spacing:.5px;margin-bottom:5px}
-.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:17px;font-family:var(--ui);color:var(--text);outline:none;transition:border .2s,box-shadow .2s}
-.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-.form-input::placeholder{color:var(--text-dim)}
-.form-err{font-size:19px;color:var(--red);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none}
-.form-success{font-size:19px;color:var(--green);font-family:var(--mono);margin-top:-6px;margin-bottom:8px;display:none;text-align:center}
-.btn-primary{width:100%;padding:11px;border-radius:var(--rs);background:var(--accent);border:none;color:#fff;font-size:26px;font-family:var(--ui);font-weight:500;cursor:pointer;transition:background .2s}
-.btn-primary:hover{background:var(--accent-dim)}
-.login-footer{display:flex;justify-content:flex-end;margin-top:12px}
-.login-link{color:var(--accent);cursor:pointer;font-weight:500;background:none;border:none;font-size:16px;font-family:var(--ui);padding:0}
-.login-link:hover{text-decoration:underline}
-.close-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sec)}
-.close-btn:hover{color:var(--text)}
-.back-link{display:flex;align-items:center;gap:6px;color:var(--text-sec);cursor:pointer;font-size:16px;background:none;border:none;font-family:var(--ui);padding:0;margin-bottom:12px}
-.back-link:hover{color:var(--text)}
-
-/* ══ PIN MODAL ══ */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;width:100%;max-width:330px}
-.modal-title{font-size:19px;font-weight:600;margin-bottom:3px}
-.modal-sub{font-size:19px;color:var(--text-sec);margin-bottom:16px;font-family:var(--mono)}
-.modal label{display:block;font-size:26px;color:var(--text-sec);margin-bottom:4px;font-family:var(--mono);letter-spacing:.5px}
-.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;font-size:17px;color:var(--text);font-family:var(--mono);outline:none;margin-bottom:12px;transition:border .2s}
-.modal-input:focus{border-color:var(--accent)}
-.modal-btns{display:flex;gap:8px;margin-top:2px}
-.modal-btns button{flex:1;padding:9px;border-radius:var(--rs);font-family:var(--mono);font-size:19px;cursor:pointer;font-weight:500}
-.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-sec)}
-.btn-submit{background:var(--accent);border:1px solid var(--accent);color:#fff}
-.modal-err{font-size:26px;color:var(--red);font-family:var(--mono);margin-top:-8px;margin-bottom:8px;display:none}
-
-
-
-
-
 
 /* ── System state hero ── */
 .state-hero{padding:28px 28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
@@ -188,12 +132,30 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 .state-hero-name.c-blue{color:var(--accent)}
 .state-hero-name.c-dim{color:var(--text-sec)}
 .state-hero-sub{font-size:13px;color:var(--text-dim);font-family:var(--mono)}
-.state-hero-right{display:none}
 .state-divider{height:1px;background:var(--border);margin:0 28px}
 
+/* ══ CONFIRM MODAL ══ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;width:100%;max-width:360px}
+.modal-icon{width:44px;height:44px;border-radius:50%;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.modal-title{font-size:17px;font-weight:600;text-align:center;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text-sec);text-align:center;font-family:var(--mono);margin-bottom:6px}
+.modal-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.mc-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 8px;text-align:center}
+.mc-label{font-size:11px;font-family:var(--mono);color:var(--text-sec);margin-bottom:4px;letter-spacing:.5px}
+.mc-val{font-size:20px;font-weight:600;font-family:var(--mono)}
+.mc-val.r{color:var(--red)}.mc-val.g{color:var(--green)}.mc-val.b{color:var(--blue)}.mc-val.t{color:var(--text)}.mc-val.rj{color:var(--amber)}
+.modal-btns{display:flex;gap:8px;margin-top:4px}
+.modal-btns button{flex:1;padding:10px;border-radius:var(--rs);font-family:var(--mono);font-size:13px;cursor:pointer;font-weight:500}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-sec)}
+.btn-cancel:hover{border-color:var(--text-sec)}
+.btn-confirm-end{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.4);color:var(--amber)}
+.btn-confirm-end:hover{background:rgba(245,158,11,.2)}
+
 /* responsive */
-@media(max-width:800px){.mid-row{grid-template-columns:1fr}.chart-card{min-height:200px}.navbar{padding:0 16px}.main{padding:16px 16px 40px}}
-@media(max-width:500px){.status-grid{grid-template-columns:1fr 1fr}.sensor-row{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.mid-row{grid-template-columns:1fr}.chart-card{min-height:200px}.navbar{padding:0 16px}.main{padding:16px 16px 40px}.shift-inner{flex-direction:column;align-items:flex-start}}
+@media(max-width:500px){.status-grid{grid-template-columns:1fr 1fr}.sensor-row{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}.modal-counts{grid-template-columns:1fr 1fr}}
 @media(max-width:380px){.status-grid{grid-template-columns:1fr}.nav-logo span{display:none}}
 </style>
 </head>
@@ -217,7 +179,6 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Export CSV
     </button>
-    <button id="authBtn" style="background:none;border:none;color:var(--text-sec);font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.5px;cursor:pointer;padding:6px 4px;transition:color .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-sec)'">Login</button>
   </div>
 </nav>
 
@@ -236,9 +197,22 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
   <div class="card">
     <div class="card-title">Machine status</div>
     <div class="status-grid">
-      <div class="stat-item"><div class="stat-label">state</div><div class="stat-val" id="machineState">—</div><div class="stat-sub" id="cycleStep">step: —</div><div class="stat-sub" id="machineDesc" style="margin-top:3px;font-size:11px"></div></div>
-      <div class="stat-item"><div class="stat-label">conveyor</div><div class="stat-val" id="conveyorVal">—</div><div class="stat-sub" id="conveyorSub">stopped</div></div>
-      <div class="stat-item"><div class="stat-label">last detected</div><div class="stat-val" id="lastColor">—</div><div class="stat-sub" id="confirmSub">0 / 4</div></div>
+      <div class="stat-item">
+        <div class="stat-label">state</div>
+        <div class="stat-val" id="machineState">—</div>
+        <div class="stat-sub" id="cycleStep">step: —</div>
+        <div class="stat-sub" id="machineDesc" style="margin-top:3px;font-size:11px"></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">conveyor</div>
+        <div class="stat-val" id="conveyorVal">—</div>
+        <div class="stat-sub" id="conveyorSub">stopped</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">last detected</div>
+        <div class="stat-val" id="lastColor">—</div>
+        <div class="stat-sub" id="confirmSub">0 / 4</div>
+      </div>
     </div>
     <div class="sensor-row">
       <div class="sensor-pill"><div class="s-led off" id="irFeedLed"></div><div class="s-label">IR feed</div><div class="s-val" id="irFeedVal">CLEAR</div></div>
@@ -274,6 +248,28 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
+  <!-- End Shift -->
+  <div class="shift-card">
+    <div class="shift-inner">
+      <div class="shift-info">
+        <div class="shift-title">End of Shift</div>
+        <div class="shift-sub">Saves today's production count to history</div>
+        <div class="shift-started" id="shiftStarted">Shift started: —</div>
+      </div>
+      <div class="shift-actions">
+        <span class="shift-saved-msg" id="shiftSavedMsg">✓ Shift saved!</span>
+        <button class="btn-end-shift" id="endShiftBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+          End Shift
+        </button>
+        <button class="nav-btn export" id="exportBtn2" style="display:flex">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- System service -->
   <div class="card">
     <div class="card-title">System service</div>
@@ -295,105 +291,27 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
     </div>
   </div>
 
-  <!-- ══ TECHNICIAN: Threshold section ══ -->
-  <div class="thresh-section" id="threshSection">
-    <div class="thresh-card">
-      <div class="thresh-header">
-        <div class="thresh-title-wrap">
-          <div class="card-title" style="margin-bottom:0">Color threshold</div>
-          <div class="thresh-badge">Technician</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px">
-          <span class="thresh-saved-msg" id="savedMsg">Saved!</span>
-          <button class="thresh-save" id="threshSaveBtn">Save to device</button>
-          <button class="nav-btn" id="resetPinBtn" style="border-color:rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.06)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Reset PIN
-          </button>
-        </div>
-      </div>
-      <!-- Live raw values -->
-      <div class="thresh-live">
-        <span class="thresh-live-label">Live</span>
-        <div class="thresh-live-vals">
-          <span class="tl-val r">R <span id="liveR">0.00</span></span>
-          <span class="tl-val g">G <span id="liveG">0.00</span></span>
-          <span class="tl-val b">B <span id="liveB">0.00</span></span>
-        </div>
-      </div>
-      <!-- Threshold adj rows -->
-      <div class="thresh-rows">
-        <div class="adj-row">
-          <span class="adj-label r">R</span>
-          <div class="adj-bar-wrap" id="barR"><div class="adj-bar r" id="fillR" style="width:30%"></div></div>
-          <button class="adj-btn" onclick="adjThresh('R',-0.01)">−</button>
-          <input class="adj-input" type="number" id="inpR" min="0.01" max="0.99" step="0.01" value="0.30"/>
-          <button class="adj-btn" onclick="adjThresh('R',+0.01)">+</button>
-        </div>
-        <div class="adj-row">
-          <span class="adj-label g">G</span>
-          <div class="adj-bar-wrap" id="barG"><div class="adj-bar g" id="fillG" style="width:30%"></div></div>
-          <button class="adj-btn" onclick="adjThresh('G',-0.01)">−</button>
-          <input class="adj-input" type="number" id="inpG" min="0.01" max="0.99" step="0.01" value="0.30"/>
-          <button class="adj-btn" onclick="adjThresh('G',+0.01)">+</button>
-        </div>
-        <div class="adj-row">
-          <span class="adj-label b">B</span>
-          <div class="adj-bar-wrap" id="barB"><div class="adj-bar b" id="fillB" style="width:30%"></div></div>
-          <button class="adj-btn" onclick="adjThresh('B',-0.01)">−</button>
-          <input class="adj-input" type="number" id="inpB" min="0.01" max="0.99" step="0.01" value="0.30"/>
-          <button class="adj-btn" onclick="adjThresh('B',+0.01)">+</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- ════ LOGIN OVERLAY ════ -->
-<div class="overlay" id="loginOverlay">
-  <div style="position:relative;width:100%;max-width:370px">
-    <div class="close-btn" id="loginClose">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </div>
-    <div class="login-card" id="formSignIn">
-      <div class="login-logo">
-        <div class="login-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
-        <div class="login-brand">SMART FACTORY</div>
-      </div>
-      <div class="login-title">Sign in</div>
-      <div class="login-sub">Technician account</div>
-      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="siEmail" placeholder="tech@factory.com" autocomplete="email"/></div>
-      <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="siPassword" placeholder="••••••••"/></div>
-      <div class="form-err" id="siErr">Incorrect email or password</div>
-      <button class="btn-primary" id="siSubmit">Sign in</button>
-      <div class="login-footer"><button class="login-link" id="goForgot">Forgot password?</button></div>
-    </div>
-    <div class="login-card" id="formForgot" style="display:none">
-      <button class="back-link" id="backToSignIn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
-      <div class="login-logo">
-        <div class="login-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-        <div class="login-brand">RESET PASSWORD</div>
-      </div>
-      <div class="login-title">Forgot password?</div>
-      <div class="login-sub">We'll send a reset link</div>
-      <div class="form-group" style="margin-top:14px"><label class="form-label">Email</label><input class="form-input" type="email" id="fpEmail" placeholder="tech@factory.com"/></div>
-      <div class="form-err" id="fpErr">Email not found</div>
-      <div class="form-success" id="fpSuccess">Reset link sent — check inbox</div>
-      <button class="btn-primary" id="fpSubmit">Send reset link</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ PIN MODAL ════ -->
-<div class="modal-overlay" id="pinModal">
+<!-- ════ END SHIFT CONFIRM MODAL ════ -->
+<div class="modal-overlay" id="endShiftModal">
   <div class="modal">
-    <div class="modal-title">Reset device PIN</div>
-    <div class="modal-sub">Syncs to M5 on next unlock</div>
-    <label>New PIN (4 digits)</label><input class="modal-input" type="password" id="newPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
-    <label>Confirm PIN</label><input class="modal-input" type="password" id="confirmPin" placeholder="••••" maxlength="4" inputmode="numeric"/>
-    <div class="modal-err" id="pinErr">PINs do not match</div>
-    <div class="modal-btns"><button class="btn-cancel" id="pinCancel">Cancel</button><button class="btn-submit" id="pinSubmit">Update PIN</button></div>
+    <div class="modal-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="modal-title">End Shift?</div>
+    <div class="modal-sub" id="modalDate">—</div>
+    <div class="modal-counts">
+      <div class="mc-item"><div class="mc-label">RED</div><div class="mc-val r" id="mRed">0</div></div>
+      <div class="mc-item"><div class="mc-label">GREEN</div><div class="mc-val g" id="mGreen">0</div></div>
+      <div class="mc-item"><div class="mc-label">BLUE</div><div class="mc-val b" id="mBlue">0</div></div>
+      <div class="mc-item"><div class="mc-label">TOTAL</div><div class="mc-val t" id="mTotal">0</div></div>
+      <div class="mc-item"><div class="mc-label">REJECT</div><div class="mc-val rj" id="mReject">0</div></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="modalCancel">Cancel</button>
+      <button class="btn-confirm-end" id="modalConfirm">Confirm End Shift</button>
+    </div>
   </div>
 </div>
 
@@ -405,259 +323,330 @@ body{font-family:var(--ui);background:var(--bg);color:var(--text);min-height:100
 
 <!-- ════ SCRIPTS ════ -->
 <script>
+// ── Theme ──────────────────────────────────────────────────────
 (function(){
-  var isDark=localStorage.getItem('sf-theme')!=='light';
+  var isDark = localStorage.getItem('sf-theme') !== 'light';
   function apply(dark){
-    isDark=dark;document.documentElement.dataset.theme=dark?'dark':'light';
-    localStorage.setItem('sf-theme',dark?'dark':'light');
+    isDark = dark;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    localStorage.setItem('sf-theme', dark ? 'dark' : 'light');
     if(window._wc){
-      var tc=dark?'#64748b':'#94a3b8',gc=dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)';
-      window._wc.options.scales.x.ticks.color=tc;window._wc.options.scales.y.ticks.color=tc;
-      window._wc.options.scales.x.grid.color=gc;window._wc.options.scales.y.grid.color=gc;
+      var tc = dark ? '#64748b' : '#94a3b8';
+      var gc = dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.04)';
+      window._wc.options.scales.x.ticks.color = tc;
+      window._wc.options.scales.y.ticks.color = tc;
+      window._wc.options.scales.x.grid.color  = gc;
+      window._wc.options.scales.y.grid.color  = gc;
       window._wc.update();
     }
   }
   apply(isDark);
-  window.addEventListener('DOMContentLoaded',function(){
-    document.getElementById('themeBtn').addEventListener('click',function(){apply(!isDark)});
+  window.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('themeBtn').addEventListener('click', function(){ apply(!isDark); });
   });
 })();
-
-// threshold adj
-function adjThresh(ch,delta){
-  var inp=document.getElementById('inp'+ch);
-  var v=Math.round((parseFloat(inp.value)+delta)*100)/100;
-  v=Math.max(0.01,Math.min(0.99,v));
-  inp.value=v.toFixed(2);
-  var fill=document.getElementById('fill'+ch);
-  fill.style.width=(v*100)+'%';
-}
-// sync bar on input change
-window.addEventListener('DOMContentLoaded',function(){
-  ['R','G','B'].forEach(function(ch){
-    var inp=document.getElementById('inp'+ch);
-    inp.addEventListener('input',function(){
-      var v=parseFloat(inp.value)||0;
-      v=Math.max(0.01,Math.min(0.99,v));
-      document.getElementById('fill'+ch).style.width=(v*100)+'%';
-    });
-  });
-  // login overlay
-  var overlay=document.getElementById('loginOverlay');
-  var formSI=document.getElementById('formSignIn'),formFP=document.getElementById('formForgot');
-  function openLogin(){overlay.classList.add('show');formSI.style.display='';formFP.style.display='none';document.getElementById('siErr').style.display='none'}
-  function closeLogin(){overlay.classList.remove('show')}
-  window._openLogin=openLogin;window._closeLogin=closeLogin;
-  document.getElementById('loginClose').addEventListener('click',closeLogin);
-  overlay.addEventListener('click',function(e){if(e.target===overlay)closeLogin()});
-  document.getElementById('goForgot').addEventListener('click',function(){formSI.style.display='none';formFP.style.display=''});
-  document.getElementById('backToSignIn').addEventListener('click',function(){formFP.style.display='none';formSI.style.display='';document.getElementById('fpSuccess').style.display='none';document.getElementById('fpErr').style.display='none'});
-  // pin modal
-  document.getElementById('resetPinBtn').addEventListener('click',function(){document.getElementById('pinModal').classList.add('show')});
-  document.getElementById('pinCancel').addEventListener('click',function(){document.getElementById('pinModal').classList.remove('show')});
-  document.getElementById('pinModal').addEventListener('click',function(e){if(e.target===document.getElementById('pinModal'))document.getElementById('pinModal').classList.remove('show')});
-  document.getElementById('pinSubmit').addEventListener('click',function(){if(window._updatePIN)window._updatePIN()});
-  // export
-  document.getElementById('exportBtn').addEventListener('click',function(){if(window._exportCSV)window._exportCSV();else alert('Firebase not connected')});
-  // thresh save
-  document.getElementById('threshSaveBtn').addEventListener('click',function(){if(window._saveThresh)window._saveThresh()});
-  // enter key
-  document.getElementById('siPassword').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('siSubmit').click()});
-  document.getElementById('fpEmail').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('fpSubmit').click()});
-});
 </script>
 
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import{getDatabase,ref,onValue,set,get}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import{getAuth,signInWithEmailAndPassword,sendPasswordResetEmail,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get, push, serverTimestamp }
+                             from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-const app=initializeApp({
-  apiKey:"AIzaSyARCq3UDDHka2_ac-lyEF2Hu9djk67DDIM",
-  authDomain:"smart-factory-system-project.firebaseapp.com",
-  databaseURL:"https://smart-factory-system-project-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId:"smart-factory-system-project",
-  storageBucket:"smart-factory-system-project.firebasestorage.app",
-  messagingSenderId:"1045060479105",
-  appId:"1:1045060479105:web:5811b3ea078ebdea8d8580"
+const app = initializeApp({
+  apiKey:            "AIzaSyARCq3UDDHka2_ac-lyEF2Hu9djk67DDIM",
+  authDomain:        "smart-factory-system-project.firebaseapp.com",
+  databaseURL:       "https://smart-factory-system-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:         "smart-factory-system-project",
+  storageBucket:     "smart-factory-system-project.firebasestorage.app",
+  messagingSenderId: "1045060479105",
+  appId:             "1:1045060479105:web:5811b3ea078ebdea8d8580"
 });
-const db=getDatabase(app),auth=getAuth(app);
-const STATES=['IDLE','HOMING','STANDBY','RUNNING','PAUSED','SETTING','ERROR'];
-const STEPS=['IDLE','PRE-PICK','PICK','LIFT','PLACING','DROP','RELEASE','RETURN','TRASH'];
-const COLORS=['—','Red','Green','Blue','Unknown'];
-const SC={RUNNING:'green',PAUSED:'amber',ERROR:'red',HOMING:'amber',SETTING:'amber'};
+const db = getDatabase(app);
 
-// chart
-const wc=new Chart(document.getElementById('weeklyChart').getContext('2d'),{
-  type:'bar',
-  data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[
-    {label:'Red',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(239,68,68,.8)',borderRadius:3},
-    {label:'Green',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(34,197,94,.8)',borderRadius:3},
-    {label:'Blue',data:[0,0,0,0,0,0,0],backgroundColor:'rgba(59,130,246,.8)',borderRadius:3}
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#64748b',font:{family:"'IBM Plex Mono'",size:10}}},
-      y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#64748b',font:{family:"'IBM Plex Mono'",size:10},precision:0},beginAtZero:true}}}
+// ── Constants ──────────────────────────────────────────────────
+const STATES = ['IDLE','HOMING','STANDBY','RUNNING','PAUSED','SETTING','ERROR'];
+const STEPS  = ['IDLE','PRE-PICK','PICK','LIFT','PLACING','DROP','RELEASE','RETURN','TRASH'];
+const COLORS = ['—','Red','Green','Blue','Unknown'];
+const SC     = { RUNNING:'green', PAUSED:'amber', ERROR:'red', HOMING:'amber', SETTING:'amber' };
+const _SDESC = {
+  OFFLINE:  'ESP32 not connected',
+  IDLE:     'Not homed — awaiting home command',
+  HOMING:   'Homing arm, please wait...',
+  STANDBY:  'Ready to start production',
+  RUNNING:  'Production cycle active',
+  PAUSED:   'Cycle paused — awaiting resume',
+  SETTING:  'In setting mode',
+  ERROR:    'Arm error — reset required'
+};
+const _SCOL = {
+  OFFLINE:'c-dim', IDLE:'c-dim', HOMING:'c-amber', STANDBY:'c-dim',
+  RUNNING:'c-green', PAUSED:'c-amber', SETTING:'c-blue', ERROR:'c-red'
+};
+
+// ── Shift tracking ─────────────────────────────────────────────
+// shiftStart เก็บ ISO string ตอนโหลดหน้าครั้งแรก
+let shiftStartTime = localStorage.getItem('sf-shift-start');
+if(!shiftStartTime){
+  shiftStartTime = new Date().toISOString();
+  localStorage.setItem('sf-shift-start', shiftStartTime);
+}
+// แสดง shift started
+const fmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+document.getElementById('shiftStarted').textContent =
+  'Shift started: ' + fmt.format(new Date(shiftStartTime));
+
+// ── Live snapshot (latest realtime data) ───────────────────────
+let latestData = {};
+
+// ── Chart ─────────────────────────────────────────────────────
+const wc = new Chart(document.getElementById('weeklyChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets: [
+      { label:'Red',   data:[0,0,0,0,0,0,0], backgroundColor:'rgba(239,68,68,.8)',  borderRadius:3 },
+      { label:'Green', data:[0,0,0,0,0,0,0], backgroundColor:'rgba(34,197,94,.8)',  borderRadius:3 },
+      { label:'Blue',  data:[0,0,0,0,0,0,0], backgroundColor:'rgba(59,130,246,.8)', borderRadius:3 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ grid:{ color:'rgba(255,255,255,.04)' }, ticks:{ color:'#64748b', font:{ family:"'IBM Plex Mono'", size:10 } } },
+      y:{ grid:{ color:'rgba(255,255,255,.04)' }, ticks:{ color:'#64748b', font:{ family:"'IBM Plex Mono'", size:10 }, precision:0 }, beginAtZero:true }
+    }
+  }
 });
-window._wc=wc;
+window._wc = wc;
 
-// realtime
-onValue(ref(db,'realtime'),snap=>{
-  const d=snap.val();if(!d)return;
+// ── Realtime listener ─────────────────────────────────────────
+onValue(ref(db, 'realtime'), snap => {
+  const d = snap.val(); if(!d) return;
+  latestData = d;
 
-  // ── ตรวจอายุข้อมูล — ถ้า M5 ไม่ได้ push ใหม่เกิน 30 วิ = OFFLINE ──
   const nowSec = Math.floor(Date.now() / 1000);
   const ageSec = d.updatedAt ? (nowSec - d.updatedAt) : 999;
   const m5Online = ageSec < 30;
 
-  const state    = m5Online ? (STATES[d.machineState]||'—') : 'IDLE';
-  const sysState = m5Online ? (d.systemState||state) : 'OFFLINE';
-  const stEl=document.getElementById('machineState');stEl.textContent=state;stEl.className='stat-val '+(SC[state]||'');
+  const state    = m5Online ? (STATES[d.machineState] || '—') : 'IDLE';
+  const sysState = m5Online ? (d.systemState || state) : 'OFFLINE';
 
-  
-  // ── system state hero ──────────────────────────────────────
-  const _SDESC={
-    OFFLINE:'ESP32 not connected',
-    IDLE:'Not homed — awaiting home command',
-    HOMING:'Homing arm, please wait...',
-    STANDBY:'Ready to start production',
-    RUNNING:'Production cycle active',
-    PAUSED:'Cycle paused — awaiting resume',
-    SETTING:'In setting mode',
-    ERROR:'Arm error — reset required'
+  // hero
+  const hsn = document.getElementById('heroStateName');
+  const hsd = document.getElementById('heroStateDesc');
+  hsn.textContent  = sysState;
+  hsn.className    = 'state-hero-name ' + (_SCOL[sysState] || 'c-dim');
+  hsd.textContent  = _SDESC[sysState] || '';
+
+  // machine state card
+  const stEl = document.getElementById('machineState');
+  stEl.textContent = state;
+  stEl.className   = 'stat-val ' + (SC[state] || '');
+  const STATE_DESC = {
+    IDLE:'Not homed yet', HOMING:'Homing arm...', STANDBY:'Ready to start',
+    RUNNING:'Cycle running', PAUSED:'Waiting for resume',
+    SETTING:'In setting mode', ERROR:'Arm error — reset required'
   };
-  const _SCOL={OFFLINE:'c-dim',IDLE:'c-dim',HOMING:'c-amber',STANDBY:'c-dim',RUNNING:'c-green',PAUSED:'c-amber',SETTING:'c-blue',ERROR:'c-red'};
-  const _SDOT={OFFLINE:'d',IDLE:'d',HOMING:'a',STANDBY:'d',RUNNING:'g',PAUSED:'a',SETTING:'a',ERROR:'r'};
-  const _hsn=document.getElementById('heroStateName');
-  const _hsd=document.getElementById('heroStateDesc');
-  if(_hsn){
-    _hsn.textContent=sysState;
-    _hsn.className='state-hero-name '+(_SCOL[sysState]||'c-dim');
-    _hsd.textContent=_SDESC[sysState]||'';
+  const descEl = document.getElementById('machineDesc');
+  if(descEl) descEl.textContent = STATE_DESC[state] || '';
+  document.getElementById('cycleStep').textContent = 'step: ' + (STEPS[d.cycleStep] || '—');
 
-  }
-  const STATE_DESC={IDLE:'Not homed yet',HOMING:'Homing arm...',STANDBY:'Ready to start',RUNNING:'Cycle running',PAUSED:'Waiting for resume',SETTING:'In setting mode',ERROR:'Arm error — reset required'};
-  const descEl=document.getElementById('machineDesc');if(descEl)descEl.textContent=STATE_DESC[state]||'';
-  document.getElementById('cycleStep').textContent='step: '+(STEPS[d.cycleStep]||'—');
-  const cvRun=d.conveyorRunning;
-  const cvEl=document.getElementById('conveyorVal');cvEl.textContent=cvRun?(d.feedSpeedPPS||0)+' pps':'—';cvEl.className='stat-val '+(cvRun?'green':'');
-  document.getElementById('conveyorSub').textContent=cvRun?'running':'stopped';
-  const colEl=document.getElementById('lastColor');colEl.textContent=COLORS[d.detectedColor]||'—';
-  colEl.className='stat-val '+(d.detectedColor===1?'red':d.detectedColor===2?'green':d.detectedColor===3?'blue':'');
-  document.getElementById('confirmSub').textContent=(d.confirmCount||0)+' / 4';
-  const irF=d.irEntry,irP=d.irPick;
-  document.getElementById('irFeedLed').className='s-led '+(irF?'on':'off');document.getElementById('irFeedVal').textContent=irF?'TRIGGERED':'CLEAR';
-  document.getElementById('irPickLed').className='s-led '+(irP?'on':'off');document.getElementById('irPickVal').textContent=irP?'TRIGGERED':'CLEAR';
-  const tcsOk=d.tcsOk!==false,tcsTrig=d.tcsTriggered;
-  document.getElementById('colorLed').className='s-led '+(!tcsOk?'err':tcsTrig?'on':'off');
-  document.getElementById('colorVal').textContent=!tcsOk?'ERROR':tcsTrig?'DETECTING':'READY';
-  document.getElementById('cntRed').textContent=d.countRed||0;document.getElementById('cntGreen').textContent=d.countGreen||0;
-  document.getElementById('cntBlue').textContent=d.countBlue||0;document.getElementById('cntTotal').textContent=d.countTotal||0;
-  document.getElementById('cntReject').textContent=d.countReject||0;
-  const espOk=d.espNowLinked!==false;
-  document.getElementById('espNowVal').textContent=espOk?'LINKED':'LOST';document.getElementById('espNowVal').className='svc-val '+(espOk?'green':'red');
-  document.getElementById('espNowBadge').textContent=espOk?'OK':'ERR';document.getElementById('espNowBadge').className='svc-badge '+(espOk?'ok':'err');
-  document.getElementById('espIconWrap').className='svc-icon '+(espOk?'green':'red');
-  const wOk=d.wifiConnected!==false;
-  document.getElementById('wifiVal').textContent=wOk?(d.wifiSSID||'Connected'):'DISCONNECTED';document.getElementById('wifiVal').className='svc-val '+(wOk?'green':'red');
-  document.getElementById('wifiBadge').textContent=wOk?'OK':'ERR';document.getElementById('wifiBadge').className='svc-badge '+(wOk?'ok':'err');
-  document.getElementById('wifiIconWrap').className='svc-icon '+(wOk?'green':'red');
-  // live raw values (for threshold section)
-  if(d.rawR!==undefined){
-    document.getElementById('liveR').textContent=(+d.rawR).toFixed(2);
-    document.getElementById('liveG').textContent=(+d.rawG).toFixed(2);
-    document.getElementById('liveB').textContent=(+d.rawB).toFixed(2);
-  }
+  // conveyor
+  const cvRun = d.conveyorRunning;
+  const cvEl  = document.getElementById('conveyorVal');
+  cvEl.textContent = cvRun ? (d.feedSpeedPPS || 0) + ' pps' : '—';
+  cvEl.className   = 'stat-val ' + (cvRun ? 'green' : '');
+  document.getElementById('conveyorSub').textContent = cvRun ? 'running' : 'stopped';
+
+  // color
+  const colEl = document.getElementById('lastColor');
+  colEl.textContent = COLORS[d.detectedColor] || '—';
+  colEl.className   = 'stat-val ' + (d.detectedColor===1?'red': d.detectedColor===2?'green': d.detectedColor===3?'blue':'');
+  document.getElementById('confirmSub').textContent = (d.confirmCount || 0) + ' / 4';
+
+  // IR sensors
+  const irF = d.irEntry, irP = d.irPick;
+  document.getElementById('irFeedLed').className  = 's-led ' + (irF ? 'on' : 'off');
+  document.getElementById('irFeedVal').textContent = irF ? 'TRIGGERED' : 'CLEAR';
+  document.getElementById('irPickLed').className  = 's-led ' + (irP ? 'on' : 'off');
+  document.getElementById('irPickVal').textContent = irP ? 'TRIGGERED' : 'CLEAR';
+
+  // color sensor
+  const tcsOk = d.tcsOk !== false, tcsTrig = d.tcsTriggered;
+  document.getElementById('colorLed').className  = 's-led ' + (!tcsOk ? 'err' : tcsTrig ? 'on' : 'off');
+  document.getElementById('colorVal').textContent = !tcsOk ? 'ERROR' : tcsTrig ? 'DETECTING' : 'READY';
+
+  // counts
+  document.getElementById('cntRed').textContent    = d.countRed    || 0;
+  document.getElementById('cntGreen').textContent  = d.countGreen  || 0;
+  document.getElementById('cntBlue').textContent   = d.countBlue   || 0;
+  document.getElementById('cntTotal').textContent  = d.countTotal  || 0;
+  document.getElementById('cntReject').textContent = d.countReject || 0;
+
+  // ESP-NOW
+  const espOk = d.espNowLinked !== false;
+  document.getElementById('espNowVal').textContent = espOk ? 'LINKED' : 'LOST';
+  document.getElementById('espNowVal').className   = 'svc-val ' + (espOk ? 'green' : 'red');
+  document.getElementById('espNowBadge').textContent = espOk ? 'OK' : 'ERR';
+  document.getElementById('espNowBadge').className   = 'svc-badge ' + (espOk ? 'ok' : 'err');
+  document.getElementById('espIconWrap').className   = 'svc-icon ' + (espOk ? 'green' : 'red');
+
+  // WiFi
+  const wOk = d.wifiConnected !== false;
+  document.getElementById('wifiVal').textContent   = wOk ? (d.wifiSSID || 'Connected') : 'DISCONNECTED';
+  document.getElementById('wifiVal').className     = 'svc-val ' + (wOk ? 'green' : 'red');
+  document.getElementById('wifiBadge').textContent = wOk ? 'OK' : 'ERR';
+  document.getElementById('wifiBadge').className   = 'svc-badge ' + (wOk ? 'ok' : 'err');
+  document.getElementById('wifiIconWrap').className = 'svc-icon ' + (wOk ? 'green' : 'red');
 });
 
-// weekly chart
-onValue(ref(db,'daily'),snap=>{
-  const data=snap.val();if(!data)return;
-  const today=new Date();const r=[],g=[],b=[];
-  for(let i=6;i>=0;i--){const d2=new Date(today);d2.setDate(today.getDate()-i);const key=d2.toISOString().substr(0,10);const day=data[key]||{};r.push(day.countRed||0);g.push(day.countGreen||0);b.push(day.countBlue||0)}
-  wc.data.datasets[0].data=r;wc.data.datasets[1].data=g;wc.data.datasets[2].data=b;wc.update();
+// ── Weekly chart ──────────────────────────────────────────────
+onValue(ref(db, 'daily'), snap => {
+  const data = snap.val(); if(!data) return;
+  const today = new Date();
+  const r=[], g=[], b=[];
+  for(let i=6; i>=0; i--){
+    const d2 = new Date(today);
+    d2.setDate(today.getDate() - i);
+    const key = d2.toISOString().substr(0, 10);
+    const day = data[key] || {};
+    r.push(day.countRed   || 0);
+    g.push(day.countGreen || 0);
+    b.push(day.countBlue  || 0);
+  }
+  wc.data.datasets[0].data = r;
+  wc.data.datasets[1].data = g;
+  wc.data.datasets[2].data = b;
+  wc.update();
 });
 
-// load threshold from Firebase
-onValue(ref(db,'config/threshold'),snap=>{
-  const d=snap.val();if(!d)return;
-  ['R','G','B'].forEach(ch=>{
-    const v=d['thresh'+ch];if(v===undefined)return;
-    const inp=document.getElementById('inp'+ch);
-    inp.value=(+v).toFixed(2);
-    document.getElementById('fill'+ch).style.width=((+v)*100)+'%';
+// ════════════════════════════════════════════════════════════════
+// END SHIFT
+// ════════════════════════════════════════════════════════════════
+const endShiftBtn  = document.getElementById('endShiftBtn');
+const endShiftModal = document.getElementById('endShiftModal');
+
+// เปิด modal พร้อมข้อมูลปัจจุบัน
+endShiftBtn.addEventListener('click', () => {
+  const d = latestData;
+  const now = new Date();
+  document.getElementById('modalDate').textContent =
+    now.toLocaleDateString('en-GB', { weekday:'short', year:'numeric', month:'short', day:'numeric' }) +
+    ' · ' + fmt.format(now);
+  document.getElementById('mRed').textContent    = d.countRed    || 0;
+  document.getElementById('mGreen').textContent  = d.countGreen  || 0;
+  document.getElementById('mBlue').textContent   = d.countBlue   || 0;
+  document.getElementById('mTotal').textContent  = d.countTotal  || 0;
+  document.getElementById('mReject').textContent = d.countReject || 0;
+  endShiftModal.classList.add('show');
+});
+
+// ยกเลิก
+document.getElementById('modalCancel').addEventListener('click', () => {
+  endShiftModal.classList.remove('show');
+});
+endShiftModal.addEventListener('click', e => {
+  if(e.target === endShiftModal) endShiftModal.classList.remove('show');
+});
+
+// ยืนยัน End Shift
+document.getElementById('modalConfirm').addEventListener('click', async () => {
+  const btn = document.getElementById('modalConfirm');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const d   = latestData;
+  const now = new Date();
+  const dateKey = now.toISOString().substr(0, 10); // YYYY-MM-DD
+
+  // บันทึก session ลง Firebase
+  // path: sessions/YYYY-MM-DD/<pushId>
+  const sessionData = {
+    date:        dateKey,
+    startTime:   shiftStartTime,
+    endTime:     now.toISOString(),
+    countRed:    d.countRed    || 0,
+    countGreen:  d.countGreen  || 0,
+    countBlue:   d.countBlue   || 0,
+    countTotal:  d.countTotal  || 0,
+    countReject: d.countReject || 0,
+  };
+
+  try {
+    // บันทึก session history
+    await push(ref(db, `sessions/${dateKey}`), sessionData);
+
+    // อัปเดต daily summary (รวมทุก session ของวันนี้)
+    const dailySnap = await get(ref(db, `daily/${dateKey}`));
+    const existing  = dailySnap.val() || { countRed:0, countGreen:0, countBlue:0, countTotal:0, countReject:0 };
+    await set(ref(db, `daily/${dateKey}`), {
+      countRed:    (existing.countRed    || 0) + (d.countRed    || 0),
+      countGreen:  (existing.countGreen  || 0) + (d.countGreen  || 0),
+      countBlue:   (existing.countBlue   || 0) + (d.countBlue   || 0),
+      countTotal:  (existing.countTotal  || 0) + (d.countTotal  || 0),
+      countReject: (existing.countReject || 0) + (d.countReject || 0),
+      lastUpdated: now.toISOString(),
+    });
+
+    // reset shift start
+    shiftStartTime = now.toISOString();
+    localStorage.setItem('sf-shift-start', shiftStartTime);
+    document.getElementById('shiftStarted').textContent =
+      'Shift started: ' + fmt.format(new Date(shiftStartTime));
+
+    // ปิด modal + แสดง saved msg
+    endShiftModal.classList.remove('show');
+    const msg = document.getElementById('shiftSavedMsg');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 3000);
+
+  } catch(err) {
+    console.error('[END SHIFT]', err);
+    alert('Failed to save shift. Check Firebase connection.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Confirm End Shift';
+});
+
+// ════════════════════════════════════════════════════════════════
+// EXPORT CSV  — อ่านจาก sessions/ ที่ End Shift เขียนจริงๆ
+// ════════════════════════════════════════════════════════════════
+async function exportCSV() {
+  const snap = await get(ref(db, 'sessions'));
+  const data = snap.val();
+  if(!data){ alert('No sessions recorded yet.\nPress "End Shift" to save today\'s data first.'); return; }
+
+  let csv = 'date,start_time,end_time,count_red,count_green,count_blue,count_total,count_reject\n';
+
+  // data structure: sessions/YYYY-MM-DD/<pushId>/{...}
+  Object.keys(data).sort().forEach(dateKey => {
+    const daySessions = data[dateKey];
+    Object.values(daySessions).forEach(s => {
+      const start = s.startTime ? new Date(s.startTime).toLocaleTimeString('en-GB') : '';
+      const end   = s.endTime   ? new Date(s.endTime).toLocaleTimeString('en-GB')   : '';
+      csv += [
+        s.date || dateKey,
+        start, end,
+        s.countRed    || 0,
+        s.countGreen  || 0,
+        s.countBlue   || 0,
+        s.countTotal  || 0,
+        s.countReject || 0,
+      ].join(',') + '\n';
+    });
   });
-});
 
-// auth
-const authBtn=document.getElementById('authBtn');
-const threshSection=document.getElementById('threshSection');
-onAuthStateChanged(auth,user=>{
-  if(user){
-    authBtn.textContent='Logout';authBtn.style.color='var(--green)';
-    threshSection.classList.add('show');
-  }else{
-    authBtn.textContent='Login';authBtn.style.color='var(--text-sec)';
-    threshSection.classList.remove('show');
-  }
-});
-authBtn.addEventListener('click',()=>{
-  if(auth.currentUser)signOut(auth);
-  else window._openLogin&&window._openLogin();
-});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type:'text/csv' }));
+  a.download = 'smart-factory-sessions.csv';
+  a.click();
+}
 
-// sign in
-document.getElementById('siSubmit').addEventListener('click',async()=>{
-  const em=document.getElementById('siEmail').value,pw=document.getElementById('siPassword').value;
-  const err=document.getElementById('siErr');err.style.display='none';
-  try{await signInWithEmailAndPassword(auth,em,pw);window._closeLogin&&window._closeLogin();document.getElementById('siPassword').value='';}
-  catch(e){err.style.display='block'}
-});
-
-// forgot password
-document.getElementById('fpSubmit').addEventListener('click',async()=>{
-  const em=document.getElementById('fpEmail').value;
-  const err=document.getElementById('fpErr'),suc=document.getElementById('fpSuccess');
-  err.style.display='none';suc.style.display='none';
-  try{await sendPasswordResetEmail(auth,em);suc.style.display='block';}
-  catch(e){err.style.display='block'}
-});
-
-// save threshold
-window._saveThresh=async()=>{
-  const btn=document.getElementById('threshSaveBtn');
-  btn.disabled=true;
-  await set(ref(db,'config/threshold'),{
-    threshR:parseFloat(document.getElementById('inpR').value),
-    threshG:parseFloat(document.getElementById('inpG').value),
-    threshB:parseFloat(document.getElementById('inpB').value)
-  });
-  btn.disabled=false;
-  const msg=document.getElementById('savedMsg');
-  msg.style.display='inline';
-  setTimeout(()=>{msg.style.display='none'},2000);
-};
-
-// update PIN
-window._updatePIN=async()=>{
-  const np=document.getElementById('newPin').value,cp=document.getElementById('confirmPin').value;
-  const err=document.getElementById('pinErr');err.style.display='none';
-  if(np.length!==4||!/^\d{4}$/.test(np)){err.textContent='PIN must be 4 digits';err.style.display='block';return}
-  if(np!==cp){err.textContent='PINs do not match';err.style.display='block';return}
-  await set(ref(db,'config/pin'),np);
-  document.getElementById('pinModal').classList.remove('show');
-  document.getElementById('newPin').value='';document.getElementById('confirmPin').value='';
-  alert('PIN updated — syncs on next M5 unlock');
-};
-
-// export CSV
-window._exportCSV=async()=>{
-  const snap=await get(ref(db,'sessions'));const data=snap.val();
-  if(!data){alert('No session data found');return}
-  let csv='date,start_time,end_time,count_red,count_green,count_blue,count_total,count_reject\n';
-  Object.entries(data).sort().forEach(([k,s])=>{csv+=[k,s.startTime||'',s.endTime||'',s.countRed||0,s.countGreen||0,s.countBlue||0,s.countTotal||0,s.countReject||0].join(',')+'\n'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='smart-factory-sessions.csv';a.click();
-};
+// ผูก export ทั้ง 2 ปุ่ม
+document.getElementById('exportBtn').addEventListener('click',  exportCSV);
+document.getElementById('exportBtn2').addEventListener('click', exportCSV);
 </script>
 </body>
 </html>
