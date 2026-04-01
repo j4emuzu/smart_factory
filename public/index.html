@@ -426,7 +426,7 @@ onValue(ref(db, 'realtime'), snap => {
   latestData = d;
 
   const nowSec = Math.floor(Date.now() / 1000);
-  const ageSec = d.updatedAt ? (nowSec - d.updatedAt) : 999;
+  const ageSec = d.updatedAt ? (nowSec - d.updatedAt) : 0;
   const m5Online = ageSec < 30;
 
   const state    = m5Online ? (STATES[d.machineState] || '—') : 'IDLE';
